@@ -3,6 +3,7 @@ import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 
+import '../widget/animate_button.dart';
 import '../widget/animate_text.dart';
 
 @pragma('vm:entry-point')
@@ -27,32 +28,53 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: 200,),
-          AnimateText(),
-          SizedBox(height: 100,),
-          Center(
-            child: GestureDetector(
-              onTap: () {
-                setState((){});
-                // final ReceivePort? receivePort = FlutterForegroundTask.receivePort;
-                // final bool isRegistered = _registerReceivePort(receivePort);
-                // FlutterForegroundTask.startService(
-                //     notificationTitle: "诉念", notificationText: "1111", callback: startCallback);
-              },
-              child: Container(
-                height: 50,
-                  width: 50,
-                  color: Colors.indigoAccent,
-                  alignment: Alignment.center,
-                  child: const Text("想你",style: TextStyle(fontSize: 12,color: Colors.white),)),
+    return Material(
+      child: Scaffold(
+        body: Column(
+          children: [
+            SizedBox(height: 200,),
+            AnimateText(),
+            SizedBox(height: 100,),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  setState((){});
+                  // final ReceivePort? receivePort = FlutterForegroundTask.receivePort;
+                  // final bool isRegistered = _registerReceivePort(receivePort);
+                  // FlutterForegroundTask.startService(
+                  //     notificationTitle: "诉念", notificationText: "1111", callback: startCallback);
+                },
+                child: Container(
+
+                  height: 50,
+                    width: 50,
+
+                    alignment: Alignment.center,
+                    child: const Text("11",style: TextStyle(fontSize: 12,color: Colors.white),),
+                  decoration: BoxDecoration(
+                  //  shape: BoxShape.circle,
+                    color: Colors.blue,
+                    border: SimpleBoder()
+
+                  ),
+                ),
+              ),
+
             ),
+            AnimateButton(),
 
-          ),
-
-        ],
+            // Container(
+            //   padding: const EdgeInsets.all(8.0),
+            //   decoration: BoxDecoration(
+            //     border: Border(
+            //       top: BorderSide(width: 12.0, color: Colors.lightBlue.shade50),
+            //       bottom: BorderSide(width: 16.0, color: Colors.lightBlue.shade900),
+            //     ),
+            //   ),
+            //   child: const Text('Flutter in the sky', textAlign: TextAlign.center),
+            // )
+          ],
+        ),
       ),
     );
   }
@@ -110,4 +132,81 @@ class MyTaskHandler extends TaskHandler {
   }
 
 
+}
+
+class SimpleBoder extends BoxBorder {
+  @override
+  // TODO: implement dimensions
+  EdgeInsetsGeometry get dimensions => EdgeInsets.zero;
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
+    var path = Path();
+    return path;
+  }
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    // var path = Path();
+    // path.addRRect(RRect.fromRectAndRadius(rect, Radius.circular(10)));
+    // var w = rect.width;
+    // var h = rect.height;
+    // var radius = 0.2*h;
+    // var pl= 0.1*h;
+    // var pt= 0.1*h;
+    // var left = w - radius - pl;
+    // var top = pt;
+    // var right = left + radius;
+    // var bottom = top + radius;
+    // path.addOval(Rect.fromLTRB(left, top, right, bottom));
+    // path.fillType = PathFillType.evenOdd;
+    var path = Path();
+    return path;
+
+  }
+
+
+  @override
+  ShapeBorder scale(double t) {
+    return this;
+  }
+  @override
+  // TODO: implement bottom
+  BorderSide get bottom => BorderSide(
+
+  );
+
+  @override
+  // TODO: implement isUniform
+  bool get isUniform => false;
+
+  @override
+  // TODO: implement top
+  BorderSide get top => BorderSide(
+
+  );
+
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection, BoxShape shape = BoxShape.rectangle, BorderRadius? borderRadius}) {
+     Path leftPath = Path();
+     Path rightPath = Path();
+    const blue = Color(0xFF156FEC);
+     final paint1 = Paint()
+       ..color = blue
+       ..strokeWidth = 2.0
+       ..style = PaintingStyle.stroke;
+     double centerX =100;
+     // 绘制背景
+     canvas.drawColor(Colors.deepPurpleAccent, BlendMode.color);
+     // 获取屏幕中心点坐标
+     // 左半爱心
+     leftPath.moveTo(centerX, 40);
+     leftPath.cubicTo(centerX - 20, 26, centerX - 10, 10, centerX, 19);
+     // 右半爱心
+     rightPath.moveTo(centerX, 40);
+     rightPath.cubicTo(centerX + 20, 26, centerX + 10, 10, centerX, 19);
+     // 绘制曲线
+     canvas.drawPath(leftPath, paint1);
+     canvas.drawPath(rightPath, paint1);
+  }
 }
