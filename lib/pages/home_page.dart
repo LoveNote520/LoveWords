@@ -5,6 +5,7 @@ import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 
 import '../widget/animate_button.dart';
 import '../widget/animate_text.dart';
+import '../widget/paint_page.dart';
 
 @pragma('vm:entry-point')
 void startCallback() {
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             Center(
               child: GestureDetector(
                 onTap: () {
-                  setState((){});
+
                   // final ReceivePort? receivePort = FlutterForegroundTask.receivePort;
                   // final bool isRegistered = _registerReceivePort(receivePort);
                   // FlutterForegroundTask.startService(
@@ -62,17 +63,7 @@ class _HomePageState extends State<HomePage> {
 
             ),
             AnimateButton(),
-
-            // Container(
-            //   padding: const EdgeInsets.all(8.0),
-            //   decoration: BoxDecoration(
-            //     border: Border(
-            //       top: BorderSide(width: 12.0, color: Colors.lightBlue.shade50),
-            //       bottom: BorderSide(width: 16.0, color: Colors.lightBlue.shade900),
-            //     ),
-            //   ),
-            //   child: const Text('Flutter in the sky', textAlign: TextAlign.center),
-            // )
+            PaintPage(),
           ],
         ),
       ),
