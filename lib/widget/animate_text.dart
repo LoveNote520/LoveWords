@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AnimateText extends StatefulWidget {
-  const AnimateText({Key? key,}) : super(key: key);
+  final String ?content;
+  const AnimateText({Key? key, this.content,}) : super(key: key);
 
   @override
   State<AnimateText> createState() => _AnimateTextState();
@@ -49,7 +50,7 @@ class _AnimateTextState extends State<AnimateText> with SingleTickerProviderStat
           position: position,
           child: FadeTransition(
             opacity: opacity,
-            child: const Text('想张老师',style: TextStyle(fontSize: 24,color: Colors.pinkAccent)),
+            child:  Text(widget.content??'想立立',style: TextStyle(fontSize: 24,color: Colors.pinkAccent,fontFamily: "mo")),
           )),
     );
   }
