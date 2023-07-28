@@ -40,6 +40,7 @@ dependencies:
   provider: ^6.0.5 #状态管理
   flex_color_picker: ^3.2.2 #选颜色
   flip_card: ^0.7.0 #卡片翻转
+  flutter_smart_dialog: ^4.9.1 #多功能弹窗
 
 dev_dependencies:
   flutter_test:

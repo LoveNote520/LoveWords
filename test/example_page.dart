@@ -52,7 +52,6 @@ class MyTaskHandler extends TaskHandler {
     // print('重复$_eventCount');
   }
 
-  // Called when the notification button on the Android platform is pressed.
   @override
   Future<void> onDestroy(DateTime timestamp, SendPort? sendPort) async {
     print('前台服务销毁了');
@@ -64,16 +63,9 @@ class MyTaskHandler extends TaskHandler {
   void onNotificationButtonPressed(String id) {
     print('onNotificationButtonPressed============================ >> $id');
   }
-
-  // Called when the notification itself on the Android platform is pressed.
-  //
-  // "android.permission.SYSTEM_ALERT_WINDOW" permission must be granted for
-  // this function to be called.
   @override
   void onNotificationPressed() {
-    // Note that the app will only route to "/resume-route" when it is exited so
-    // it will usually be necessary to send a message through the send port to
-    // signal it to restore state when the app is already started.
+
     ///按下通知栏唤醒app
     FlutterForegroundTask.launchApp("/resume-route"); //还可以指定路由
     //这边发
@@ -297,4 +289,73 @@ class ResumeRoutePage extends StatelessWidget {
   }
 }
 
+// void main(){
+//   String src = 'toly1a9b9c4';
+//   RegExp regExp = RegExp(r'\d');
+//   List<String> parts = src.split(regExp);
+//   print(parts);
+// }
 
+///根据这个字符分割
+InlineSpan formSpan(String src, String pattern) {
+  ///根据这个字符分割并且不加上这个字符
+  List<String> parts = src.split(pattern);
+  if(parts.isEmpty) return TextSpan(text: src);
+  List<TextSpan> span = [];
+  for (int i = 0; i < parts.length; i++) {
+    span.add(TextSpan(text: parts[i]));
+    if (i != parts.length - 1) {
+      // 插入匹配字符 [样式高亮]
+      span.add(TextSpan(text: pattern, style: TextStyle(color: Colors.cyan)));
+    }
+  }
+  return TextSpan(children: span);
+}
+
+// void main(){
+//   String src = 'acsweet1a9b9c8';
+//   RegExp regExp = RegExp(r'\d');
+//   // 获取匹配结果
+//   ///allMatches获得所有匹配的字符串
+//   Iterable<RegExpMatch> allMatches = regExp.allMatches(src);
+//   List<String?> matchResults = allMatches.map((e) => e.group(0)).toList();
+//   print(matchResults);
+// }
+
+InlineSpan formSpan2(String src, String pattern) {
+  List<TextSpan> span = [];
+  RegExp regExp = RegExp(pattern);
+  // 非匹配结果列表
+  ///使用split找到不匹配字符串列表
+  List<String> parts = src.split(regExp);
+  if(parts.isEmpty) return TextSpan(text: src);
+  // 匹配结果列表
+  ///使用allMatches找到匹配字符串列表
+  List<RegExpMatch> allMatches = regExp.allMatches(src).toList();
+  for (int i = 0; i < parts.length; i++) {
+    span.add(TextSpan(text: parts[i]));
+    if (i != parts.length - 1) {
+      ///高亮的部分
+      String matchValue = allMatches[i].group(0)??'';
+      span.add(TextSpan(text: matchValue, style:  TextStyle(color: Colors.cyan)));
+    }
+  }
+  return TextSpan(children: span);
+}
+
+///. 认识 splitMapJoin
+/// 它是 String 类的成员方法，第一参是 Pattern 匹配规则，它可以通过 onMatch 监听到每次匹配结果，找到匹配的字符串
+/// ，通过 onNonMatch 监听到不匹配结果。找到不匹配字符串 也就是说，它一个人能同时干上面的两件事：
+///
+///
+ void main() {
+  String src = '这是一段测试代码，我要测试测试，看能不能测试通过。';
+  String pattern = '测试';
+  src.splitMapJoin(pattern, onMatch: (Match match) {
+    print("===onMatch:${match.group(0)}=======");
+    return "";
+  }, onNonMatch: (str) {
+    print("===onNonMatch:$str=======");
+    return "";
+  });
+}
