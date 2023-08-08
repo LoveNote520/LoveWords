@@ -38,9 +38,12 @@ dependencies:
   flutter_foreground_task: ^6.0.0+1 # 前台服务
   shared_preferences: ^2.2.0 # 本地缓存
   provider: ^6.0.5 #状态管理
+  get: ^4.6.5
+  sqflite: ^2.3.0 #数据库
   flex_color_picker: ^3.2.2 #选颜色
   flip_card: ^0.7.0 #卡片翻转
   flutter_smart_dialog: ^4.9.1 #多功能弹窗
+  bot_toast: ^4.0.4 #吐司
 
 dev_dependencies:
   flutter_test:

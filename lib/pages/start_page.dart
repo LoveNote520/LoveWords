@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../utils/util_route.dart';
-import 'miss_page.dart';
+import 'old_miss_page.dart';
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
 
@@ -25,7 +25,7 @@ class _StartPageState extends State<StartPage> {
           index--;
         } else {
           //跳转到引导页面
-          NavigatorUtil.goNewPage(context, const MissPage(), replace: true);
+          NavigatorUtil.goNewPage(context, const MissYouPage(), replace: true);
           index = 0;
           timer.cancel();
         }

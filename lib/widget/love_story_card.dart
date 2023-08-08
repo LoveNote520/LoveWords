@@ -1,40 +1,15 @@
-import 'package:flutter/material.dart';
-
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter/material.dart';
+class LoveStoryCard extends StatefulWidget {
+  const LoveStoryCard({Key? key}) : super(key: key);
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'FlipCard',
-      theme: ThemeData.dark(),
-      home: HomePage(),
-    );
-  }
+  State<LoveStoryCard> createState() => _LoveStoryCardState();
 }
 
-class HomePage extends StatelessWidget {
-  _renderBg() {
-    return Container(
-      decoration: const BoxDecoration(color: Color(0xFFFFFFFF)),
-    );
-  }
-
-  _renderAppBar(context) {
-    return MediaQuery.removePadding(
-      context: context,
-      removeBottom: true,
-      child: AppBar(
-        elevation: 0.0,
-        backgroundColor: const Color(0x00FFFFFF),
-      ),
-    );
-  }
-
-  _renderContent(context) {
+class _LoveStoryCardState extends State<LoveStoryCard> {
+  @override
+  Widget build(BuildContext context) {
     return Card(
       elevation: 0.0,
       margin: const EdgeInsets.only(left: 32.0, right: 32.0, top: 20.0, bottom: 0.0),
@@ -74,35 +49,6 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('FlipCard'),
-      ),
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          _renderBg(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              _renderAppBar(context),
-              Expanded(
-                flex: 4,
-                child: _renderContent(context),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(),
-              ),
-            ],
-          )
-        ],
       ),
     );
   }

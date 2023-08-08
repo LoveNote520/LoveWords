@@ -1,26 +1,27 @@
-import 'package:counter/pages/index.dart';
-import 'package:counter/utils/index.dart';
+import 'package:counter/getx_module/add_unique/add_unique_binding.dart';
+import 'package:counter/getx_module/add_unique/add_unique_view.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
-import '../model/color_model.dart';
-import '../widget/animate_button.dart';
-import '../widget/animate_text.dart';
+import '../../widget/animate_text.dart';
+import 'miss_logic.dart';
 
-class MissPage extends StatefulWidget {
-  const MissPage({Key? key}) : super(key: key);
+class MissPage extends StatelessWidget {
+  MissPage({Key? key}) : super(key: key);
 
-  @override
-  State<MissPage> createState() => _MissPageState();
-}
+  final logic = Get.find<MissLogic>();
+  final state = Get
+      .find<MissLogic>()
+      .state;
 
-class _MissPageState extends State<MissPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MissAppBar(
         setting: () {
-          NavigatorUtil.goNewPageFadeRouter(context, const SettingPage());
+          // Get.toNamed("/addUniquePage");
+          Get.to(() => AddUniquePage(), binding: AddUniqueBinding());
+          // NavigatorUtil.goNewPageFadeRouter(context, const SettingPage());
         },
       ),
       body: Column(
@@ -29,10 +30,12 @@ class _MissPageState extends State<MissPage> {
           const SizedBox(
             height: 10,
           ),
-          Center(
-              child: AnimateText(
-            content: "想彬彬",
-          )),
+          GetBuilder<MissLogic>(builder: (logic) {
+            return Center(
+                child: AnimateText(
+                  content: "想彬彬",
+                ));
+          }),
           // Center(
           //   child: AnimateButton(
           //     height: 200,
@@ -59,7 +62,6 @@ class MissAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Provider.of<ThemeModel>(context).themeColor,
       centerTitle: true,
       title: const Text(
         "诉念",
