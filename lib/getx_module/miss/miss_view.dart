@@ -1,5 +1,6 @@
 import 'package:counter/getx_module/add_unique/add_unique_binding.dart';
 import 'package:counter/getx_module/add_unique/add_unique_view.dart';
+import 'package:counter/getx_module/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +21,7 @@ class MissPage extends StatelessWidget {
       appBar: MissAppBar(
         setting: () {
           // Get.toNamed("/addUniquePage");
-          Get.to(() => AddUniquePage(), binding: AddUniqueBinding());
+          Get.to(() => SettingPage(), binding: SettingBinding());
           // NavigatorUtil.goNewPageFadeRouter(context, const SettingPage());
         },
       ),
@@ -63,9 +64,9 @@ class MissAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: const Text(
-        "诉念",
-        style: TextStyle(
+      title:  Text(
+        'title'.tr,
+        style: const TextStyle(
           fontSize: 25,
           fontFamily: "xingshu",
         ),

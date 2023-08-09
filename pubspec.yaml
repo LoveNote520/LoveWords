@@ -44,6 +44,7 @@ dependencies:
   flip_card: ^0.7.0 #卡片翻转
   flutter_smart_dialog: ^4.9.1 #多功能弹窗
   bot_toast: ^4.0.4 #吐司
+  web_socket_channel: ^2.4.0 #scket长连接
 
 dev_dependencies:
   flutter_test:

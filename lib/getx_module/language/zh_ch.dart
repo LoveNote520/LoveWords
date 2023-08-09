@@ -6,7 +6,7 @@ const Map<String, String> zhCH = {
   "Description": "描述",
   "Select Image": "选择图片",
   "Settings": "设置",
-  "Language": "语言",
+  "Language": "修改语言",
   "Welcome": "欢迎使用",
   "Report Problem": "报告问题"
 };
