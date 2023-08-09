@@ -1,7 +1,5 @@
 //路由配置
-
 import 'package:counter/getx_module/index.dart';
-import 'package:counter/getx_module/socket/socket_view.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class RouteConfig {

@@ -7,6 +7,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'getx_module/index.dart';
 import 'getx_module/theme/color.dart';
+import 'getx_module/theme/font.dart';
 import 'index.dart';
 
 void main() {
@@ -19,7 +20,8 @@ bool firstTimeOpenApp = false;
 
 class MyApp extends StatelessWidget {
   final themeManager = Get.put(ThemeManager());
-   MyApp({super.key});
+  final FontController fontController = Get.put(FontController());
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     final botToastBuilder = BotToastInit();
@@ -33,7 +35,6 @@ class MyApp extends StatelessWidget {
       translations:LocalizationService(),//翻译
       locale: LocalizationService.locale,// 将会按照此处指定的语言翻译
       fallbackLocale: LocalizationService.fallBackLocale, //如果locale不存在则使用这个
-
       ///颜色主题
       theme: themeManager.currTheme.value,
       darkTheme: themeManager.themeDark.value,

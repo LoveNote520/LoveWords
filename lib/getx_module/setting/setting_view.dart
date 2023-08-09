@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../language/localization_service.dart';
+import '../theme/font.dart';
 import 'setting_logic.dart';
 
 class SettingPage extends StatelessWidget {
@@ -14,7 +15,7 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text( "Settings".tr)),
+      appBar: AppBar(title: Text("Settings".tr)),
       body: ListView(
         children: [
           ListTile(
@@ -22,20 +23,13 @@ class SettingPage extends StatelessWidget {
               Icons.style,
               color: Theme.of(context).primaryColor,
             ),
-            title:  Text('深色模式', style:  TextStyle(fontSize: 16,fontFamily: "long")),
-            // subtitle: BlocBuilder<AppBloc,AppState>(
-            //   builder: (_,state)=>Text(
-            //       themeMode2Str[state.themeMode]!
-            //       , style:  const TextStyle(fontSize: 12,color: Colors.grey)
-            //   ),
-            // ),
-            // trailing: _nextIcon(context),
-            onTap: (){
-              // Navigator.of(context).push(Right2LeftRouter(child: const ThemeModelSetting()));
-            },
+            title: Obx(() {
+              return Text('切换字体',
+                  style: TextStyle(fontSize: 16, fontFamily: Get.find<FontController>().selectedFont.value));
+            }),
+            onTap: () {},
           ),
         ],
-
       ),
     );
   }
