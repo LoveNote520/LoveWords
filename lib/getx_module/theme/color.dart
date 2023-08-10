@@ -4,21 +4,17 @@ import 'package:get/get.dart';
 class ThemeManager extends GetxController {
   final themeMode = 0.obs;
 
-  final themeLight = ThemeData(
-
-  ).obs;
-  final themeDark = ThemeData.dark(
-
-  ).obs;
+  final themeLight = ThemeData().obs;
+  final themeDark = ThemeData.dark().obs;
   final themeRed = ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffD4BFEA)),
       useMaterial3: true,
       primaryColor: Colors.purpleAccent).obs;
 
   final currTheme = Rx<ThemeData>(ThemeData(
-      primaryColor: Colors.purpleAccent
+    primaryColor: Color(0xff2b63d2),
+    colorScheme: ColorScheme.fromSeed(  primary: Color(0xffBFEAFF),seedColor: Color(0xffBFEAFF)),
   ));
-
   void changeTheme(int mode) {
     themeMode.value = mode;
 

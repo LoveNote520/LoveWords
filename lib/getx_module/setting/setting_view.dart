@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../index.dart';
-import '../language/localization_service.dart';
-import '../theme/font.dart';
-import 'setting_logic.dart';
 
 class SettingPage extends StatelessWidget {
   SettingPage({Key? key}) : super(key: key);
@@ -16,11 +12,17 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Settings".tr)),
+      appBar: AppBar(
+          elevation: 0,
+          title: Obx(() {
+            return Text(
+              "Settings".tr,
+              style: TextStyle(fontSize: 24, fontFamily: Get.find<FontController>().selectedFont.value),
+            );
+          })),
       body: ListView(
         children: [
           ListTile(
-
             leading: Icon(
               Icons.style,
               color: Theme.of(context).primaryColor,

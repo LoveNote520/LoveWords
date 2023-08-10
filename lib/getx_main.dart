@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       locale: LocalizationService.locale,// 将会按照此处指定的语言翻译
       fallbackLocale: LocalizationService.fallBackLocale, //如果locale不存在则使用这个
       ///颜色主题
-      theme: themeManager.currTheme.value,
+      theme:themeManager.currTheme.value,
       darkTheme: themeManager.themeDark.value,
       builder: (context, widget){
         widget = botToastBuilder(context,widget);

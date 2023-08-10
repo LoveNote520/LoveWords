@@ -1,9 +1,14 @@
 import 'package:get/get.dart';
 
-import 'setting_font_state.dart';
+import '../../index.dart';
 
 class SettingFontLogic extends GetxController {
   final SettingFontState state = SettingFontState();
+
+
+void changeFont( {required String font}){
+  Get.find<FontController>().setFont(font);
+}
 
   @override
   void onReady() {

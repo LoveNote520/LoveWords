@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../widget/animate_text.dart';
-import 'miss_logic.dart';
 
 class MissPage extends StatelessWidget {
   MissPage({Key? key}) : super(key: key);
@@ -19,6 +18,7 @@ class MissPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MissAppBar(
+
         setting: () {
           // Get.toNamed("/addUniquePage");
           Get.to(() => SettingPage(), binding: SettingBinding());
@@ -63,6 +63,7 @@ class MissAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0,
       centerTitle: true,
       title:  Text(
         'title'.tr,

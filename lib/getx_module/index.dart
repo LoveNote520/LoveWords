@@ -24,3 +24,5 @@ export 'setting/setting_font/setting_font_binding.dart';
 export 'setting/setting_font/setting_font_logic.dart';
 export 'setting/setting_font/setting_font_state.dart';
 export 'setting/setting_font/setting_font_view.dart';
+export 'theme/font.dart';
+export 'theme/color.dart';
