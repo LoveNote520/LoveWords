@@ -20,3 +20,7 @@ export 'socket/socket_logic.dart';
 export 'socket/socket_state.dart';
 export 'socket/socket_view.dart';
 export 'package:web_socket_channel/web_socket_channel.dart';
+export 'setting/setting_font/setting_font_binding.dart';
+export 'setting/setting_font/setting_font_logic.dart';
+export 'setting/setting_font/setting_font_state.dart';
+export 'setting/setting_font/setting_font_view.dart';

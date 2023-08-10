@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../index.dart';
 import '../language/localization_service.dart';
 import '../theme/font.dart';
 import 'setting_logic.dart';
@@ -19,6 +20,7 @@ class SettingPage extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
+
             leading: Icon(
               Icons.style,
               color: Theme.of(context).primaryColor,
@@ -27,7 +29,9 @@ class SettingPage extends StatelessWidget {
               return Text('切换字体',
                   style: TextStyle(fontSize: 16, fontFamily: Get.find<FontController>().selectedFont.value));
             }),
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(RouteConfig.settingFontPage);
+            },
           ),
         ],
       ),
