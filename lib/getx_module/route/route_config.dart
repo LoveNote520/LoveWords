@@ -8,6 +8,7 @@ class RouteConfig {
   static const String settingPage = "/settingPage";
   static const String settingFontPage = "/settingFontPage";
   static const String socketPage = "/socketPage";
+  static const String homePage = "/homePage";
   static final List<GetPage> getPages = [
     GetPage(
       name: missPage,
@@ -27,6 +28,11 @@ class RouteConfig {
     GetPage(
       name: settingFontPage,
       page: () => const SettingFontPage(),
+    ),
+    GetPage(
+      name: homePage,
+      page: () => const HomePage(),
+      binding: HomeBinding(),
     )
   ];
 }

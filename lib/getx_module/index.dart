@@ -26,3 +26,7 @@ export 'theme/color.dart';
 export 'base/key.dart';
 export 'base/enum.dart';
 export 'setting/setting_language_view.dart';
+export 'home/home_binding.dart';
+export 'home/home_logic.dart';
+export 'home/home_state.dart';
+export 'home/home_view.dart';

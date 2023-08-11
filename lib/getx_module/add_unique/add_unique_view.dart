@@ -12,11 +12,9 @@ class AddUniquePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(title: Text( "添加你的唯一"),
+      appBar:  AppBar(title: const Text( "添加你的唯一"),
       ),
         body: Container(
-
-
 
     ));
   }

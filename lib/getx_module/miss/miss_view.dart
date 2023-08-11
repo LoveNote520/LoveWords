@@ -4,6 +4,7 @@ import 'package:counter/getx_module/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../widget/animate_button.dart';
 import '../../widget/animate_text.dart';
 
 class MissPage extends StatelessWidget {
@@ -41,9 +42,7 @@ class MissPage extends StatelessWidget {
           //   child: AnimateButton(
           //     height: 200,
           //     width: 150,
-          //     onTap: () {
-          //       setState(() {});
-          //     },
+          //     onTap: () =>logic.update(),
           //   ),
           // )
         ],
