@@ -5,15 +5,16 @@ class SpUtil {
 
   static SpUtil? _instance;
 
-  static SpUtil getInstance() {
-    _instance ??= SpUtil._().._init();
+  static SpUtil get instance {
+    _instance = _instance ?? SpUtil._();
     return _instance!;
   }
-
+  SharedPreferences get spf => _prefs!;
   SpUtil._();
 
-  Future _init() async {
-    _prefs = await SharedPreferences.getInstance();
+  Future init() async {
+    if (_prefs != null) return;
+    _prefs = _prefs ?? await SharedPreferences.getInstance();
   }
 
   static String? getString(String key, {String? defValue}) {

@@ -8,5 +8,14 @@ const Map<String, String> enUS = {
   "Settings": "Settings",
   "Language": "Language",
   "Welcome": "Welcome",
-  "Report Problem": "Report Problem"
+  "Report Problem": "Report Problem",
+  "切换字体":"switch font",
+  "切换语言":"switch language",
+  "切换主题":"switch theme",
+  "选择字体":"choose font",
+  "星爱甜心":"star love sweetheart",
+  "行书":"running script",
+  "夏日":"the summer",
+  "飞舞行书":"flying script",
+  "圆圆":"round",
 };

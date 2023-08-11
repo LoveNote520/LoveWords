@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../index.dart';
@@ -14,6 +15,7 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
+          centerTitle: true,
           title: Obx(() {
             return Text(
               "Settings".tr,
@@ -22,62 +24,58 @@ class SettingPage extends StatelessWidget {
           })),
       body: ListView(
         children: [
-          ListTile(
-            leading: Icon(
-              Icons.style,
-              color: Theme.of(context).primaryColor,
+          ColoredBox(
+            color: Color(0xffc6eecc),
+            child: ListTile(
+              leading: const Icon(
+                Icons.font_download,
+                color: Color(0xffB4D2FF),
+              ),
+              title: Obx(() {
+                return Text('切换字体'.tr,
+                    style: TextStyle(fontSize: 16, fontFamily: Get.find<FontController>().selectedFont.value));
+              }),
+              onTap: () {
+                Get.to(const SettingFontPage());
+              },
             ),
-            title: Obx(() {
-              return Text('切换字体',
-                  style: TextStyle(fontSize: 16, fontFamily: Get.find<FontController>().selectedFont.value));
-            }),
-            onTap: () {
-              Get.toNamed(RouteConfig.settingFontPage);
-            },
+          ),
+          ColoredBox(
+            color: Color(0xffc4bfe9),
+            child: ListTile(
+              leading: const Icon(
+                Icons.language,
+                color:Color(0xffB4D2FF),
+              ),
+              title: Obx(() {
+                return Text('切换语言'.tr,
+                    style: TextStyle(fontSize: 16, fontFamily: Get.find<FontController>().selectedFont.value));
+              }),
+              onTap: () {
+                Get.to(const SettingLanguagePage());
+              },
+            ),
+          ),
+          ColoredBox(
+            color: Color(0xfff4b9a6),
+            child: ListTile(
+              leading: const Icon(
+                Icons.scatter_plot,
+                color: Color(0xffB4D2FF),
+              ),
+              title: Obx(() {
+                return Text('切换主题'.tr,
+                    style: TextStyle(fontSize: 16, fontFamily: Get.find<FontController>().selectedFont.value));
+              }),
+              onTap: () {
+              //懒得做主题切换，下次一定
+                BotToast.showText(text: '有生之年完成主题切换',duration: const Duration(seconds: 2,));
+              },
+            ),
           ),
         ],
       ),
     );
-  }
-
-  List<Widget> _buildList() {
-    List<Widget> listItems = [
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 40,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.language),
-              SizedBox(
-                width: 10,
-              ),
-              Text("Language".tr),
-            ],
-          ),
-          TextButton(
-            child: const Text("فارسی"),
-            onPressed: () => langCtrl.changeLocale('فارسی'),
-          ),
-          TextButton(
-            child: const Text("English"),
-            onPressed: () => langCtrl.changeLocale('English'),
-          ),
-          TextButton(
-            child: const Text("中文"),
-            onPressed: () => langCtrl.changeLocale('简体中文'),
-          ),
-        ],
-      ),
-      SizedBox(
-        height: 700,
-      )
-    ];
-
-    return listItems;
   }
 }
 

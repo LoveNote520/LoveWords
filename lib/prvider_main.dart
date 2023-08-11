@@ -8,7 +8,7 @@ import 'model/color_model.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SpUtil.getInstance();
+  SpUtil.instance;
   initData();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => ThemeModel(),),

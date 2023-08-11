@@ -26,8 +26,7 @@ class RouteConfig {
     ),
     GetPage(
       name: settingFontPage,
-      page: () => SettingFontPage(),
-      binding: SettingFontBinding(),
+      page: () => const SettingFontPage(),
     )
   ];
 }

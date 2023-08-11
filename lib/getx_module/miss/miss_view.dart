@@ -65,13 +65,18 @@ class MissAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       centerTitle: true,
-      title:  Text(
-        'title'.tr,
-        style: const TextStyle(
-          fontSize: 25,
-          fontFamily: "xingshu",
-        ),
-      ),
+      title: Obx(() {
+        return Text(
+          'title'.tr,
+          style: TextStyle(
+              fontSize: 22,
+              fontFamily: Get
+                  .find<FontController>()
+                  .selectedFont
+                  .value
+          ),
+        );
+      }),
       actions: [
         IconButton(
           onPressed: setting,

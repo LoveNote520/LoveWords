@@ -2,6 +2,8 @@ import 'package:counter/getx_module/language/zh_ch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../utils/sp_util.dart';
+import '../index.dart';
 import 'en_us.dart';
 import 'fa_AF.dart';
 
@@ -13,7 +15,11 @@ class LocalizationService extends Translations {
   static final langs = ['فارسی', 'English', '简体中文'];
   static final locales = [Locale("fa", "AF"), Locale("en", "US"), Locale("zh", "CH")];
 
-  String selectedLang = langs.first;
+  late String selectedLang;
+
+  LocalizationService() {
+    selectedLang = SpUtil.getString(KeyValue.languageSetting) ?? langs.first;
+  }
 
   @override
   Map<String, Map<String, String>> get keys => {
@@ -49,7 +55,6 @@ class LocalizationService extends Translations {
 //         }
 //       };
 // }
-
 
 //return GetMaterialApp(
 //     translations: Messages(), // 你的翻译

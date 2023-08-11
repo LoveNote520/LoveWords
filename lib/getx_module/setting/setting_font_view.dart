@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../index.dart';
+import '../../utils/sp_util.dart';
+import '../index.dart';
 
 class SettingFontPage extends StatelessWidget {
-  SettingFontPage({Key? key}) : super(key: key);
-
-  final logic = Get.find<SettingFontLogic>();
-  final state = Get.find<SettingFontLogic>().state;
+  const SettingFontPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +14,33 @@ class SettingFontPage extends StatelessWidget {
           centerTitle: true,
           title: Obx(() {
             return Text(
-              "选择字体",
-              style: TextStyle(color: Theme.of(context).primaryColor, fontFamily: Get.find<FontController>().selectedFont.value),
+              "选择字体".tr,
+              style: TextStyle(
+                  color: Theme.of(context).primaryColor, fontFamily: Get.find<FontController>().selectedFont.value),
             );
           })),
       body: Column(
         children: [
-          _fontDetails(title: '星爱甜心', fontFamily: 'tian',),
-          _fontDetails(title: '行书', fontFamily: 'xingshu',),
-          _fontDetails(title: '夏日', fontFamily: 'summer',),
-          _fontDetails(title: '飞舞行书', fontFamily: 'long',),
-          _fontDetails(title: '圆圆', fontFamily: 'yuan',),
+          _fontDetails(
+            title: '星爱甜心',
+            fontFamily: 'tian',
+          ),
+          _fontDetails(
+            title: '行书',
+            fontFamily: 'xingshu',
+          ),
+          _fontDetails(
+            title: '夏日',
+            fontFamily: 'summer',
+          ),
+          _fontDetails(
+            title: '飞舞行书',
+            fontFamily: 'long',
+          ),
+          _fontDetails(
+            title: '圆圆',
+            fontFamily: 'yuan',
+          ),
         ],
       ),
     );
@@ -37,9 +51,14 @@ class SettingFontPage extends StatelessWidget {
     required String fontFamily,
   }) {
     return GestureDetector(
-      onTap: () =>  Get.find<FontController>().setFont(fontFamily),
+      onTap: () {
+        Get.find<FontController>().setFont(fontFamily);
+        SpUtil.setString(KeyValue.fontSetting, fontFamily);
+      },
       child: Container(
-        margin: const EdgeInsets.only(top: 10,),
+        margin: const EdgeInsets.only(
+          top: 10,
+        ),
         width: double.infinity,
         alignment: Alignment.center,
         padding: const EdgeInsets.all(15),
