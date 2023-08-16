@@ -3,17 +3,19 @@ import 'package:vector_math/vector_math.dart' as vector;
 
 class BottomBar extends StatefulWidget {
   final Color? iconBackgroundColor;
-  final Color ? backgroundColor ;
-   List<TabItem> tabItem;
+  final Color? backgroundColor;
+
+  List<TabItem> tabItem;
   final Function onBarTap;
   final int? animationMilliseconds;
 
-   BottomBar(
+  BottomBar(
       {Key? key,
       this.iconBackgroundColor = Colors.deepPurple,
       required this.tabItem,
       required this.onBarTap,
-      this.animationMilliseconds = 300, this.backgroundColor = Colors.white})
+      this.animationMilliseconds = 300,
+      this.backgroundColor = Colors.white})
       : super(key: key);
 
   @override
@@ -30,7 +32,8 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
   late Animation<double> _fadeFabInAnimation;
 
   double fabIconAlpha = 1;
-///是1的话在中间
+
+  ///是1的话在中间
   int selectedBarIndex = 1;
 
   @override
@@ -57,8 +60,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
           })
           ..addStatusListener((AnimationStatus status) {
             if (status == AnimationStatus.completed) {
-              setState(() {
-              });
+              setState(() {});
             }
           });
 
@@ -79,9 +81,10 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
       children: <Widget>[
         Container(
           height: 65,
-          padding: const EdgeInsets.only( bottom: 18),
-          decoration:  BoxDecoration(
-              color: widget.backgroundColor, boxShadow: const [BoxShadow(color: Colors.black12, offset: Offset(0, -1), blurRadius: 8)]),
+          padding: const EdgeInsets.only(bottom: 18),
+          decoration: BoxDecoration(
+              color: widget.backgroundColor,
+              boxShadow: const [BoxShadow(color: Colors.black12, offset: Offset(0, -1), blurRadius: 8)]),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,7 +115,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                               child: Container(
                                   width: 70,
                                   height: 70,
-                                  decoration:  BoxDecoration(
+                                  decoration: BoxDecoration(
                                       color: widget.backgroundColor,
                                       shape: BoxShape.circle,
                                       boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8)])),
@@ -149,7 +152,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                 ),
               ),
             ),
-           ),
+          ),
         ),
       ],
     );
@@ -167,7 +170,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
     double iconAlpha = alphaOn;
     List<Widget> barItems = [];
     for (int i = 0; i < widget.tabItem.length; i++) {
-      widget.tabItem[i].selected == true;
+      widget.tabItem[i].selected == (selectedBarIndex == i);
       barItems.add(Expanded(
         child: Stack(
           fit: StackFit.expand,
@@ -195,7 +198,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                 alignment: Alignment(0, iconYAlign),
                 child: AnimatedOpacity(
                   duration: Duration(milliseconds: widget.animationMilliseconds!),
-                  opacity:iconAlpha,
+                  opacity: iconAlpha,
                   child: IconButton(
                     highlightColor: Colors.transparent,
                     splashColor: Colors.transparent,
@@ -219,7 +222,8 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                         textYAlign = (widget.tabItem[i].selected!) ? textOn : textOff;
                         iconAlpha = (widget.tabItem[i].selected!) ? alphaOFF : alphaOn;
                         debugPrint("$i ================================${widget.tabItem[i].selected!} ");
-                        debugPrint("++++++++++++iconYAlign$iconYAlign  textYAlign$textYAlign  iconAlpha$iconAlpha ============");
+                        debugPrint(
+                            "++++++++++++iconYAlign$iconYAlign  textYAlign$textYAlign  iconAlpha$iconAlpha ============");
                       });
                     },
                   ),
@@ -247,6 +251,7 @@ class HalfClipper extends CustomClipper<Rect> {
     return true;
   }
 }
+
 //画个白色半圆
 class HalfPainter extends CustomPainter {
   @override
@@ -278,8 +283,8 @@ class TabItem {
   final IconData iconData;
   final bool? selected;
 
- TabItem({
-    this.selected =false,
+  TabItem({
+    this.selected = false,
     required this.iconData,
     required this.title,
   });
