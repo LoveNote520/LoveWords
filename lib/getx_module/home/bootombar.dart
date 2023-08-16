@@ -4,12 +4,11 @@ import 'package:vector_math/vector_math.dart' as vector;
 class BottomBar extends StatefulWidget {
   final Color? iconBackgroundColor;
   final Color? backgroundColor;
-
-  List<TabItem> tabItem;
+  final  List<TabItem> tabItem;
   final Function onBarTap;
   final int? animationMilliseconds;
 
-  BottomBar(
+ const BottomBar(
       {Key? key,
       this.iconBackgroundColor = Colors.deepPurple,
       required this.tabItem,
@@ -34,7 +33,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
   double fabIconAlpha = 1;
 
   ///是1的话在中间
-  int selectedBarIndex = 1;
+ int barIndex = 1;
 
   @override
   void initState() {
@@ -138,9 +137,9 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                           child: Padding(
                             padding: const EdgeInsets.all(0.0),
                             child: Opacity(
-                              opacity: fabIconAlpha,
+                              opacity: fabIconAlpha,//白色图标切换时的动画
                               child: Icon(
-                                widget.tabItem[selectedBarIndex].iconData,
+                                widget.tabItem[barIndex].iconData,
                                 color: Colors.white,
                               ),
                             ),
@@ -159,18 +158,8 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
   }
 
   List<Widget> _buildBarItems() {
-    const double iconOff = -3;
-    const double iconOn = 0;
-    const double textOff = 3;
-    const double textOn = 1;
-    const double alphaOFF = 0;
-    const double alphaOn = 1;
-    double iconYAlign = iconOn;
-    double textYAlign = textOff;
-    double iconAlpha = alphaOn;
     List<Widget> barItems = [];
     for (int i = 0; i < widget.tabItem.length; i++) {
-      widget.tabItem[i].selected == (selectedBarIndex == i);
       barItems.add(Expanded(
         child: Stack(
           fit: StackFit.expand,
@@ -179,8 +168,9 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
               height: double.infinity,
               width: double.infinity,
               child: AnimatedAlign(
+                  // curve: Curves.easeIn,//动画曲线
                   duration: Duration(milliseconds: widget.animationMilliseconds!),
-                  alignment: Alignment(0, textYAlign),
+                  alignment: Alignment(0, (barIndex == i)? 3 : 8),//控制文字的位置
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -192,44 +182,34 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
             SizedBox(
               height: double.infinity,
               width: double.infinity,
-              child: AnimatedAlign(
-                duration: Duration(milliseconds: widget.animationMilliseconds!),
-                curve: Curves.easeIn,
-                alignment: Alignment(0, iconYAlign),
-                child: AnimatedOpacity(
-                  duration: Duration(milliseconds: widget.animationMilliseconds!),
-                  opacity: iconAlpha,
-                  child: IconButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    padding: const EdgeInsets.all(0),
-                    alignment: const Alignment(0, 0),
-                    icon: Icon(
-                      widget.tabItem[i].iconData,
-                      color: widget.iconBackgroundColor,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        selectedBarIndex = i;
-                        widget.onBarTap(selectedBarIndex);
-                        _positionTween.begin = _positionAnimation.value;
-                        _positionTween.end = i - 1;
-                        _animationController.reset();
-                        _fadeOutController.reset();
-                        _animationController.forward();
-                        _fadeOutController.forward();
-                        iconYAlign = (widget.tabItem[i].selected!) ? iconOff : iconOn;
-                        textYAlign = (widget.tabItem[i].selected!) ? textOn : textOff;
-                        iconAlpha = (widget.tabItem[i].selected!) ? alphaOFF : alphaOn;
-                        debugPrint("$i ================================${widget.tabItem[i].selected!} ");
-                        debugPrint(
-                            "++++++++++++iconYAlign$iconYAlign  textYAlign$textYAlign  iconAlpha$iconAlpha ============");
-                      });
-                    },
+              child:AnimatedOpacity(
+                duration: Duration(milliseconds: widget.animationMilliseconds!),//动画时长
+                opacity: (barIndex == i) ? 0 : 1,////控制icon的透明度
+                child: IconButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  padding: const EdgeInsets.all(0),
+                  alignment: const Alignment(0, 0),
+                  icon: Icon(
+                    widget.tabItem[i].iconData,
+                    color: widget.iconBackgroundColor,
                   ),
+                  onPressed: () {
+                    setState(() {
+                      widget.onBarTap(barIndex);
+                      barIndex = i;
+                      _positionTween.begin = _positionAnimation.value;
+                      _positionTween.end = i - 1;
+                      _animationController.reset();
+                      _fadeOutController.reset();
+                      _animationController.forward();
+                      _fadeOutController.forward();
+                    });
+                  },
                 ),
               ),
             )
+
           ],
         ),
       ));
@@ -281,10 +261,8 @@ class HalfPainter extends CustomPainter {
 class TabItem {
   final String title;
   final IconData iconData;
-  final bool? selected;
 
   TabItem({
-    this.selected = false,
     required this.iconData,
     required this.title,
   });
