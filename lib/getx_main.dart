@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [FlutterSmartDialog.observer],
 
       ///==路由初始化
-      initialRoute: RouteConfig.missPage,
+      initialRoute: RouteConfig.homePage,
       getPages: RouteConfig.getPages,
       //懒注入
       ///==多语言初始化

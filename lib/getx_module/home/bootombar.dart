@@ -99,9 +99,9 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
               decoration: const BoxDecoration(color: Colors.transparent),
               child: Align(
                 heightFactor: 0.5,
-                alignment: Alignment(_positionAnimation.value, -1),
+                alignment: Alignment(_positionAnimation.value, -1),//_positionAnimation.value控制这个叠叠的圆的位置，根据点的导航修改圆的x轴的位置
                 child: FractionallySizedBox(
-                  widthFactor: 1 / 3,
+                  widthFactor: 1/3,//控制占的宽度
                   child: Stack(
                     alignment: Alignment.center,
                     children: <Widget>[
@@ -109,7 +109,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                         height: 90,
                         width: 90,
                         child: ClipRect(
-                            clipper: HalfClipper(),
+                            clipper: HalfClipper(),//裁剪半圆
                             child: Center(
                               child: Container(
                                   width: 70,
@@ -120,12 +120,6 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                                       boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8)])),
                             )),
                       ),
-                      // SizedBox(
-                      //     height: 70,
-                      //     width: 90,
-                      //     child: CustomPaint(
-                      //       painter: HalfPainter(),
-                      //     )),
                       SizedBox(
                         height: 60,
                         width: 60,
@@ -196,10 +190,10 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
                   ),
                   onPressed: () {
                     setState(() {
-                      widget.onBarTap(barIndex);
                       barIndex = i;
-                      _positionTween.begin = _positionAnimation.value;
-                      _positionTween.end = i - 1;
+                      widget.onBarTap(barIndex);
+                      _positionTween.begin = _positionAnimation.value; //圆开始位置
+                      _positionTween.end = i - 1; //圆结束的位置
                       _animationController.reset();
                       _fadeOutController.reset();
                       _animationController.forward();

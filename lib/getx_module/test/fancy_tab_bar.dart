@@ -1,21 +1,24 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:vector_math/vector_math.dart' as vector;
 
+
+
 class FancyTabBar extends StatefulWidget {
+
+  const FancyTabBar({super.key});
+
   @override
-  _FancyTabBarState createState() => _FancyTabBarState();
+  createState() => _FancyTabBarState();
 }
 
-class _FancyTabBarState extends State<FancyTabBar>
-    with TickerProviderStateMixin {
- late AnimationController _animationController;
+class _FancyTabBarState extends State<FancyTabBar> with TickerProviderStateMixin {
+  late AnimationController _animationController;
   late Tween<double> _positionTween;
   late Animation<double> _positionAnimation;
 
- late AnimationController _fadeOutController;
- late Animation<double> _fadeFabOutAnimation;
+  late AnimationController _fadeOutController;
+  late Animation<double> _fadeFabOutAnimation;
   late Animation<double> _fadeFabInAnimation;
 
   double fabIconAlpha = 1;
@@ -28,20 +31,17 @@ class _FancyTabBarState extends State<FancyTabBar>
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: ANIM_DURATION));
-    _fadeOutController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: (ANIM_DURATION ~/ 5)));
+    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: animDuration));
+    _fadeOutController = AnimationController(vsync: this, duration: const Duration(milliseconds: (animDuration ~/ 5)));
 
     _positionTween = Tween<double>(begin: 0, end: 0);
-    _positionAnimation = _positionTween.animate(
-        CurvedAnimation(parent: _animationController, curve: Curves.easeOut))
+    _positionAnimation = _positionTween.animate(CurvedAnimation(parent: _animationController, curve: Curves.easeOut))
       ..addListener(() {
         setState(() {});
       });
 
-    _fadeFabOutAnimation = Tween<double>(begin: 1, end: 0).animate(
-        CurvedAnimation(parent: _fadeOutController, curve: Curves.easeOut))
+    _fadeFabOutAnimation =
+    Tween<double>(begin: 1, end: 0).animate(CurvedAnimation(parent: _fadeOutController, curve: Curves.easeOut))
       ..addListener(() {
         setState(() {
           fabIconAlpha = _fadeFabOutAnimation.value;
@@ -55,10 +55,8 @@ class _FancyTabBarState extends State<FancyTabBar>
         }
       });
 
-    _fadeFabInAnimation = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(
-            parent: _animationController,
-            curve: Interval(0.8, 1, curve: Curves.easeOut)))
+    _fadeFabInAnimation = Tween<double>(begin: 0, end: 1)
+        .animate(CurvedAnimation(parent: _animationController, curve: const Interval(0.8, 1, curve: Curves.easeOut)))
       ..addListener(() {
         setState(() {
           fabIconAlpha = _fadeFabInAnimation.value;
@@ -73,11 +71,9 @@ class _FancyTabBarState extends State<FancyTabBar>
       children: <Widget>[
         Container(
           height: 65,
-          margin: EdgeInsets.only(top: 45),
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(
-                color: Colors.black12, offset: Offset(0, -1), blurRadius: 8)
-          ]),
+          margin: const EdgeInsets.only(top: 45),
+          decoration: const BoxDecoration(
+              color: Colors.white, boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(0, -1), blurRadius: 8)]),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,7 +116,7 @@ class _FancyTabBarState extends State<FancyTabBar>
         ),
         IgnorePointer(
           child: Container(
-            decoration: BoxDecoration(color: Colors.transparent),
+            decoration: const BoxDecoration(color: Colors.transparent),
             child: Align(
               heightFactor: 1,
               alignment: Alignment(_positionAnimation.value, 0),
@@ -134,17 +130,14 @@ class _FancyTabBarState extends State<FancyTabBar>
                       width: 90,
                       child: ClipRect(
                           clipper: HalfClipper(),
-                          child: Container(
-                            child: Center(
-                              child: Container(
-                                  width: 70,
-                                  height: 70,
-                                  decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle,
-                                      boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8)])
-                              ),
-                            ),
+                          child: Center(
+                            child: Container(
+                                width: 70,
+                                height: 70,
+                                decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8)])),
                           )),
                     ),
                     SizedBox(
@@ -159,11 +152,8 @@ class _FancyTabBarState extends State<FancyTabBar>
                       child: Container(
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: PURPLE,
-                            border: Border.all(
-                                color: Colors.white,
-                                width: 5,
-                                style: BorderStyle.none)),
+                            color: purple,
+                            border: Border.all(color: Colors.white, width: 5, style: BorderStyle.none)),
                         child: Padding(
                           padding: const EdgeInsets.all(0.0),
                           child: Opacity(
@@ -215,8 +205,7 @@ class HalfPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final Rect beforeRect = Rect.fromLTWH(0, (size.height / 2) - 10, 10, 10);
     final Rect largeRect = Rect.fromLTWH(10, 0, size.width - 20, 70);
-    final Rect afterRect =
-    Rect.fromLTWH(size.width - 10, (size.height / 2) - 10, 10, 10);
+    final Rect afterRect = Rect.fromLTWH(size.width - 10, (size.height / 2) - 10, 10, 10);
 
     final path = Path();
     path.arcTo(beforeRect, vector.radians(0), vector.radians(90), false);
@@ -237,36 +226,30 @@ class HalfPainter extends CustomPainter {
 }
 
 class TabItem extends StatefulWidget {
-  TabItem(
-      {super.key, required this.selected,
-        required this.iconData,
-        required this.title,
-        required this.callbackFunction});
+  final String title;
+  final IconData iconData;
+  final bool selected;
+  final Function callbackFunction;
 
-  String title;
-  IconData iconData;
-  bool selected;
-  Function callbackFunction;
-
+  const TabItem(
+      {super.key, required this.selected, required this.iconData, required this.title, required this.callbackFunction});
   @override
-  _TabItemState createState() => _TabItemState();
+  createState() => _TabItemState();
 }
 
-const double ICON_OFF = -3;
-const double ICON_ON = 0;
-const double TEXT_OFF = 3;
-const double TEXT_ON = 1;
-const double ALPHA_OFF = 0;
-const double ALPHA_ON = 1;
-const int ANIM_DURATION = 300;
-const Color PURPLE = Color(0xFF8c77ec);
-
+const double iconOff = -3;
+const double iconOn = 0;
+const double textOff = 3;
+const double textOn = 1;
+const double alphaOFF = 0;
+const double alphaOn = 1;
+const int animDuration = 300;
+const Color purple = Color(0xFF8c77ec);
 
 class _TabItemState extends State<TabItem> {
-
-  double iconYAlign = ICON_ON;
-  double textYAlign = TEXT_OFF;
-  double iconAlpha = ALPHA_ON;
+  double iconYAlign = iconOn;
+  double textYAlign = textOff;
+  double iconAlpha = alphaOn;
 
   @override
   void initState() {
@@ -282,9 +265,9 @@ class _TabItemState extends State<TabItem> {
 
   _setIconTextAlpha() {
     setState(() {
-      iconYAlign = (widget.selected) ? ICON_OFF : ICON_ON;
-      textYAlign = (widget.selected) ? TEXT_ON : TEXT_OFF;
-      iconAlpha = (widget.selected) ? ALPHA_OFF : ALPHA_ON;
+      iconYAlign = (widget.selected) ? iconOff : iconOn;
+      textYAlign = (widget.selected) ? textOn : textOff;
+      iconAlpha = (widget.selected) ? alphaOFF : alphaOn;
     });
   }
 
@@ -294,38 +277,38 @@ class _TabItemState extends State<TabItem> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Container(
+          SizedBox(
             height: double.infinity,
             width: double.infinity,
             child: AnimatedAlign(
-                duration: Duration(milliseconds: ANIM_DURATION),
+                duration: const Duration(milliseconds: animDuration),
                 alignment: Alignment(0, textYAlign),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     widget.title,
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 )),
           ),
-          Container(
+          SizedBox(
             height: double.infinity,
             width: double.infinity,
             child: AnimatedAlign(
-              duration: Duration(milliseconds: ANIM_DURATION),
+              duration: const Duration(milliseconds: animDuration),
               curve: Curves.easeIn,
               alignment: Alignment(0, iconYAlign),
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: ANIM_DURATION),
+                duration: const Duration(milliseconds: animDuration),
                 opacity: iconAlpha,
                 child: IconButton(
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
-                  padding: EdgeInsets.all(0),
-                  alignment: Alignment(0, 0),
+                  padding: const EdgeInsets.all(0),
+                  alignment: const Alignment(0, 0),
                   icon: Icon(
                     widget.iconData,
-                    color: PURPLE,
+                    color: purple,
                   ),
                   onPressed: () {
                     widget.callbackFunction();
