@@ -1,0 +1,337 @@
+关于滑动小册的学习的记录
+ListView 的类的构造
+
+实现父类的 内容组件
+ @override
+       Widget buildChildLayout(BuildContext context) {
+         if (itemExtent != null) {
+           return SliverFixedExtentList(
+             delegate: childrenDelegate,
+             itemExtent: itemExtent!,
+           );
+         } else if (prototypeItem != null) {
+           return SliverPrototypeExtentList(
+             delegate: childrenDelegate,
+             prototypeItem: prototypeItem!,
+           );
+         }
+         return SliverList(delegate: childrenDelegate);
+       }
+
+
+childrenDelegate: 类型为SliverChildDelegate ，不可为 null ；
+itemExtent : 类型为double ，可为 null ；
+prototypeItem : 类型为 Widget ，可为 null ；
+
+ itemExtent 属性可以为条目组件增加一个强约束，使用条目在滑动主轴向的尺寸被固定。
+
+ ListView 的本质就是对 SliverList、SliverFixedExtentList 及和SliverPrototypeExtentList 三者的整合，
+ itemExtent 的作用非常明显。当它 非空时，ListView 组件内容依赖于 SliverFixedExtentList 展示。
+ 同理 prototypeItem 非空时，依赖于 SliverPrototypeExtentList 。
+ 如果两者都为空，则依赖于 SliverList 展示。
+
+
+ ListView 的 custom 构造
+
+ 通过上面三个构造方法，我们知道其中最主要的操作是通过入参对 childrenDelegate 成员进行初始化。以此来看 custom 构造自然也不例外。
+ 如下是 ListView.custom 构造源码，非常简单，让使用者传入 childrenDelegate 对 childrenDelegate 成员进行初始化
+
+ ListView继承BoxScrollView
+ BoxScrollView 类信息：可以看出它是一个抽象类，只有一个 buildChildLayout 抽象方法。
+ 只维护一个 padding 成员。这说明 BoxScrollView 本身并不复杂，只是为了处理一下 内边距 而已。
+ 看完它的源码后可以思考一下：为什么加个边距而已，要单独搞个 BoxScrollView 抽象类，它的存在有什么意义？
+
+ //BoxScrollView 作为抽象类，
+ 只是为了在构建时通过 SliverPadding 组件处理边距，并通过抽象方法 buildChildLayout 构建滑动内容，具体实现会交由子类完成。
+  Flutter 框架中 BoxScrollView 有ListView 和 GridView 两个子类 ，这说明两者在结构上是相似的，只是在抽象方法的具体实现上有所差异。
+
+
+ 默认情况下 BoxScrollView#buildSlivers 返回组件列表，
+ 其中只有一个 SliverPadding 组件，并且 SliverPadding 内部包裹 SliverList 。
+ 滑动内容 是如何被创建出来的： ScrollView 想要支持滑动，那就必然需要构建 滑动内容 。但它并不关心具体的内容组件列表构建逻辑，所以抽象出 buildSlivers 的行为，交由子类来实现。
+  BoxScrollView 作为 ScrollView 的子类，要去实现这个抽象方法，但它只想处理一下 padding ，并返回只有一块滑动内容 的列表。作为抽象类的它，也不想关心这个内容组件 的构建逻辑。所以抽象出 buildChildLayout 的行为，交由子类实现。
+  ListView 不是抽象类，作为 BoxScrollView 的子类，必然要去实现 buildChildLayout 来创建 一块滑动内容，这块内容就是上一章我们提到的 SliverXXXList。
+
+
+
+  从 ScrollView 成员属性的角度来看，它们一部分用于逻辑处理，另一部分用于 Scrollable 、XXXViewport 组件的构造中。
+  所以，整体来说 ScrollView 是一个滑动的 统辖者，它整合了滑动的三个要素：
+     【1】 : 创建主体内容 slivers 组建列表。(由子类具体实现)
+     【2】：创建 Scrollable 组件，并处理默认滑动控制器。
+     【3】: 根据滑动偏移量创建XXXViewport 视口组件。
+
+
+ GridView
+
+GridView 继承自 BoxScrollView，这就说明它和
+ListView 一样：滑动处理、视口构建、边距处理 ，这些都逻辑已经在 上层抽象 中被处理好了。
+自己只需要实现父类的buildChildLayout抽象方法，创建一块滑动内容组件 (sliver)。
+
+  @override
+  Widget buildChildLayout(BuildContext context) {
+    return SliverGrid(
+      delegate: childrenDelegate,
+      gridDelegate: gridDelegate,
+    );
+  }
+
+  使用方式一：SliverGridDelegateWithFixedCrossAxisCount 特点是固定交叉轴的数量。比如在竖直滑动中，主轴是竖直方向，交叉轴 是水平方向；
+  此时crossAxisCount:3 表示水平方向一行有 3 个条目。crossAxisSpacing 和 mainAxisSpacing 分别表示 交叉轴方向 和 主轴方向 上条目的 间隙 。
+
+  4.GridView 的构造方法 - builder 构造 和 custom 构造
+  上面的三种构造本质上是一样的，它们有一个共同的缺点：在构造时必须传入组件列表 children 。在第二章讲述 ListView 时也说过这类问题，如果条目组件数量巨大或者无限 时，这种构造方式是不适合的，因为它必须要一次创建所有的组件，才能作为入参传入构造方法中。
+
+  GridView#builder 构造解决方式和 ListView 是一样的，都是通过 SliverChildBuilderDelegate 来初始化 childrenDelegate 。
+
+  custom 构造也和 ListView 中类似，用户自己创建对象作为入参为 gridDelegate 和 childrenDelegate 成员赋值。也就是说这个构造在使用上是最复杂的，但用户可以操作的更多，所以也是最灵活的。
+
+
+CustomScrollView
+
+  buildSlivers 的具体实现直接返回使用者传入的 slivers，这说明 CustomScrollView 类本身并没有做什么时，就一个的构建滑动内容组件列表 (slivers) 的任务，还是由 使用者 完成。
+
+
+  CustomScrollView最大的价值
+    @override
+ List<Widget> buildSlivers(BuildContext context) => slivers;
+
+ 自己构建  自由度更大
+
+
+==============================================================Scrollable属性=======================================================
+
+. axisDirection 的作用 一般这个和 viewPort  的axisDirection  一个方向
+其类型为 AxisDirection 枚举，它表示 滑动方向。包括如下四个元素：
+
+enum AxisDirection {
+  up, // 向上
+  right, // 向右
+  down, // 向下
+  left, // 向左
+}
+如下左侧是默认的 down ，
+表示手势从下向上拖拽，显示下面的内容； 中间是 up 的效果，手势从下向上拖拽，显示上面的内容，
+也就是说 从上向下 滑动，显示下方内容。右侧是 right 的效果，手势从右向左拖拽，显示下方内容。也就是说 axisDirection 表示，想要显示下方的内容，需要从哪个方向进行滑动。
+
+
+
+
+ ScrollController 控制器的监听
+   final ScrollController _ctrl = ScrollController();
+
+   @override
+   void initState() {
+     super.initState();
+     _ctrl.addListener(listenScroll);
+   }
+
+   @override
+   void dispose() {
+     _ctrl.dispose();
+     super.dispose();
+   }
+
+   void listenScroll() {
+     print('======offset:${_ctrl.offset}================');
+  _ctrl.position   是 ScrollPosition 对象，可以获得最大滑动长度、用户滑动方向、滑动轴向等信息：
+     print(
+         '======可以获得最大滑动长度maxScrollExtent:${_ctrl.position.maxScrollExtent}================');
+     print(
+         '======用户滑动方向userScrollDirection:${_ctrl.position.userScrollDirection}================');
+     print(
+         '======滑动轴向axisDirection:${_ctrl.position.axisDirection}================');
+   }
+
+   通过这些信息，我们便可以检测到用户在滑动中是否到达最顶部或最底部；其实不用额外判断，ScrollPosition 为我们提供了 atEdge 方法，可以获取是否滑到了边缘。
+
+      bool get atEdge => pixels == minScrollExtent || pixels == maxScrollExtent;
+
+
+
+       dragStartBehavior
+      。这是 单击 和竖直拖拽 检测器同时存在的一个测试案例。在上滑时断点信息如下：两个手势检测器竞技，由于拖拽一段距离，拖拽检测器竞技胜利，此时有一个delta 偏移量
+      start 和 down 的区别就在于：_initialPosition 是否需要加上这个偏移量 。接下来就是看 _initialPosition 的作用是什么。
+       dragStartBehavior: DragStartBehavior.start
+
+
+       . dragStartBehavior 的注意点
+       但是 ，很少人能意识到一个细节：如果了解 Flutter 手势竞技原理，就能知道：
+       当手指按下时，竞技场会关闭。此时，如果只有一个参赛者，该参赛者直接胜利。也就是说，如果竞技场里只有 VerticalDragGestureRecognizer ，
+       那么按下时它就会获胜，从而触发 acceptGesture 回调，此时 delta 为 0 偏移。
+
+       所以，如果滑动手势中没有其他的手势检测器进入竞技场，start 和 down 的效果并没有区别。
+       这也是绝大多数人不了解 start 和 down 区别的一个很重要的原因，因为测不出来区别。
+       想要测出区别，可以为条目添加点击事件，这样在手指按下时，拖拽手势检测器 和 单击手势检测器 就会进入竞技场，
+       start 和 down 才会有作用。到这里，dragStartBehavior 这个属性的所有秘密都已暴露
+
+
+
+   physics
+
+   physics 是 物理 的意思，类型为 ScrollPhysics ，用来决定 Scrollable 组件滚动时的 物理特性 。
+
+   2. 不同 ScrollPhysics 子类效果
+   我们最熟悉的两种效果是 ClampingScrollPhysics 和 BouncingScrollPhysics 。
+ClampingScrollPhysics 会在滑动方向 夹住 内容，用于确保滚动偏移不超过内容边界 ，这是 Android 平台滑动视图默认的 physics 效果。
+  BouncingScrollPhysics 允许滑动偏移超出内容边界，比如在顶部向下滑动，依然可以滑动一段距离，当松手后内容会回弹到视口顶部。这是 iOS 平台 滑动视图默认的 physics 效果。
+
+
+ NeverScrollableScrollPhysics 表示不响应用户的滑动行为，表现上来看就是视口无法滑动；
+ 与之对应的是AlwaysScrollableScrollPhysics ，则表示响应用户的滑动行为。
+  另外，FixedExtentScrollPhysics 必须用于控制器是 FixedExtentScrollController 的滑动体，
+
+  这类的滑动体需要每个 item 在滑动方向有相同的尺寸，滑动停止后，会停留在 item 的中间。
+  一般用于 ListWheelScrollView 组件中，
+  下面是 CupertinoPicker 源码的构建方法，可以看到其底层依赖于 ListWheelScrollView 组件实现，且使用了这种 physics
+
+ScrollPhysics 对象的叠加 （同时拥有两种滑动的物理效果）
+如果仔细观察就会发现 ScrollPhysics 的构造方法中有ScrollPhysics 类型的 parent 属性。也就是说，可以对多个 physics 效果进行叠加。
+
+BouncingScrollPhysics 并不会响应拖拽事件。这时如果想要滑动时有上下的弹性区间，可以通过叠加 AlwaysScrollableScrollPhysics ，表示总算响应用户滑动行为
+physics: const BouncingScrollPhysics(
+  parent: const AlwaysScrollableScrollPhysics()
+),
+
+
+，如果既想要翻页滑动，有想要上下的弹性区间，可以通过 PageScrollPhysics + BouncingScrollPhysics 进行效果叠加
+
+ ScrollBehavior 对 Scrollbar 和指示器的配置
+从这里可以看出：android 平台滑动到边缘时的阴影的指示器，本质上和 physics 是没有半毛钱关系的，这是 scrollBehavior 的锅。
+
+
+4.自定义 ScrollBehavior 和 使用 ScrollConfiguration
+如果不想要蓝色阴影，只要自定义一个 ScrollBehavior 即可。
+
+class NoIndicatorScrollBehavior extends ScrollBehavior{
+  @override
+  Widget buildOverscrollIndicator(BuildContext context, Widget child,
+      ScrollableDetails details) {
+    return child;
+  }
+}
+
+将 NoIndicatorScrollBehavior 设置到 scrollBehavior ，这样安卓平台就没有蓝色阴影指示器了。
+Scrollable(
+  scrollBehavior: NoIndicatorScrollBehavior(),
+  //...
+),
+
+到这里可以总结一下：scrollBehavior 属性最重要的价值在于，它可以针对不同平台进行不同的滑动行为处理。
+
+认识 restorationId 的作用
+
+
+2. restorationId 的使用
+官方给了一个计数器的案例，用来存储和恢复 int 型数据，下面一起来认识 RestorationMixin 的使用。
+这里定义一个 RestorableCounter ，需求是在系统意外杀死界面后，可以存储和恢复当前计数情况。入参中传入 restorationId 标识。
+状态类中的处理逻辑如下：首先混入 RestorationMixin ，然后定义一个 RestorableInt 的对象 _counter，
+接着覆写 restorationId 和 restoreState 方法。在 restoreState 中通过 registerForRestoration 进行注册。最后再界面销毁时，销毁 _counter 。
+Restoration 实现的逻辑是在状态类中进行的，所以看一下 ScrollableState 状态类。如下，它混入了 RestorationMixin ，用于存储的对象类型为 _RestorableScrollOffset 。
+其中覆写的 restorationId 返回组件的 restorationId 属性。
+覆写的 restoreState 方法中会通过 registerForRestoration 对 _persistedScrollOffset 进行注册。当 _persistedScrollOffset 值非空 ，
+position 对象就会恢复到该值，这样就能保证视口维持之前的偏移量。
+首先我们要为 MaterialApp 指定 restorationScopeId 参数，任意字符串都可以。
+
+---->[06/06_restorationId/main.dart]----
+MaterialApp(
+  restorationScopeId: 'any-string',
+  //...
+然后为 Scrollable 指定 restorationId 即可，任意字符串都可以。
+
+Scrollable(
+  restorationId: 'toly', //tag1
+  //...
+),
+
+另外 semanticChildCount 、excludeFromSemantics 是语义相关的属性，
+并不重要，这里不做引申。incrementCalculator 属性是一个回调函数 ScrollIncrementCalculator ,
+通过 ScrollIncrementDetails 对象返回一个 double 值。
+
+
+==============================================================Viewport属性=======================================================
+
+在 Scrollable 也有这个属性，一般来说 Viewport 和 Scrollable 的主轴方向是相同的，
+不然在交互上会反常识。默认情况下主轴放向是 AxisDirection.down，表示 Viewport 的内容自上而下排列。
+
+交叉轴的方向是和主轴垂直的，但当主轴向是竖直方向，交叉轴可以向左也可以向右。考虑到不同地域的阅读习惯不同，比如有些地域习惯从左到右阅读，
+比如中国、英国等；有些地域习惯从右向左，比如阿拉伯、西伯利亚。
+所以 up 和 down 时，使用会根据 Directionality 中存储的文字排列方向进行适配
+。当主轴向时 right 和 left 时，并不会进行处理，交叉轴都是 down ，因为并没有哪个地域有从下到上的阅读习惯。
+
+
+默认的缓存区域大小是 250 逻辑像素。
+Viewport 中与缓存相关的属性有 cacheExtent 和 cacheExtentStyle 。
+
+其中 cacheExtent 的类型为 doule ，表示 缓存区域的大小；
+cacheExtentStyle 类型为 CacheExtentStyle 枚举，它表示缓存的单位，有两个元素。pixel 表示单位为逻辑像素，viewport 表示单位是视口主轴方向尺寸。
+
+视口+缓存区 高度之内的组件状态对象会被初始化：
+
+
+
+Viewport 其他属性
+1. 锚点 anchor  视口内容向下偏移
+anchor 类型为 double ，它表示 零偏移量的相对位置。如下左图，滑动方向是down
+，当 anchor 值为 0.1 ，
+视口内容向下偏移 视口高度*0.1 ；当 anchor 为 0.5 时，视口内容向下偏移 视口高度*0.5 。
+可以发现通过 anchor 可以指定在未滑动时，内容的偏移量，大小为是 主轴向视口尺寸 * anchor
+ Viewport 在构造方法中，并没有限定 anchor 的取值范围，但是 RenderViewport 中，对 anchor 属性设置值时，限制 anchor 的值在[0.0,1.0] 区间。
+2 center
+
+ 当指定 Viewport 的 center 属性为 centerKey ，且 Sliver2 的 key 为 centerKey ，这样的话 Sliver2 将会被作为滑动内容的中心，默认置于视口顶部。
+
+3 clipBehavior
+  属性对应的类型为 Clip 枚举，有如下四个元素。它用来表示组件内容裁剪的方式。
+  在这里中默认是 antiAlias ，这种方式是抗锯齿的裁剪，也就是说裁剪成曲线时不会产生锯齿感。
+
+ /// Different ways to clip a widget's content.
+ enum Clip {
+   none, // 无
+   hardEdge, // 硬边缘
+   antiAlias, // 抗锯齿
+   antiAliasWithSaveLayer, // 抗锯齿+存储层
+ }
+
+
+ ===================================================================ScrollView的属性===============================================
+
+ scrollDirection 和 reverse 属性
+
+ 我们在使用 ScrollView 时，轴向传入的是 Axis 对象，只能确定滑动方向是 水平 还 竖直 。
+  但 Scrollable 和 Viewport 组需要的是 AxisDirection 对象，它有 上下左右 四个情况。
+  所以需要根据 scrollDirection 和 reverse 成员，来转化为 AxisDirection 对象。这个方法就是 getDirection 。
+
+  AxisDirection getDirection(BuildContext context) {
+    return getAxisDirectionFromAxisReverseAndDirectionality(
+             context, scrollDirection, reverse);
+  }
+
+  shrinkWrap 属性
+  shrinkWrap 成员在源码的 buildViewport 方法中被使用，该方法用于创建视口组件。
+
+当 shrinkWrap 为 true 时，会返回 ShrinkWrappingViewport 组件，否则返回 Viewport 组件。
+这样 shrinkWrap 的作用就上升为 ShrinkWrappingViewport 与 Viewport 组件的差异性。这时可能有人会好奇，这两个视口组件有什么不同呢？
+。使用 Viewport ，可见其尺寸是 沿主轴方向延伸，
+ ShrinkWrappingViewport 组件，会根据子组件的尺寸，确定自身尺寸。
+
+primary 属性的作用就非常明显了，它可以决定是否使用上层 PrimaryScrollController 组件提供的滑动控制器。
+
+primary 属性为true 时，会通过上层的 PrimaryScrollController 组件获取默认的滑动控制器。
+ 否则会使用用户传入的滑动控制器 controller 。最终滑动控制器将会作为 Scrollable 组件的构造入参。
+ primary 属性默认为 null，会在 ScrollView 构造函数中进行初始化。逻辑如下：当用户未设置 primary 属性时，
+ 会根据 controller 是否为空，且 是否竖直滑动 ，只有这两个条件全部满足，primary 才会为 true，
+ 也就是说，如果用户提供了 controller ，且没有设置 primary 属性，那么 primary 会在构造函数中设置为 false ，表示不需要默认的动画控制器。
+ 到这里 primary 属性的作用就非常明显了，它可以决定是否使用上层 PrimaryScrollController 组件提供的滑动控制器。
+ 至于其上层的 PrimaryScrollController 组件是在那里
+
+
+keyboardDismissBehavior 属性
+
+enum ScrollViewKeyboardDismissBehavior {
+  manual,
+  onDrag,
+}
+
+manual 和 onDrag 的效果如下：当前 键盘弹出时，如果为 manual ，列表滑动过程中键盘不会主动隐藏 。为 onDrag 时，滑动列表时，键盘会主动隐藏
+现在再回到 ScrollView#build 方法的处理中，可以看到 keyboardDismissBehavior 属性为 onDrag 时，会在外层嵌套一个 NotificationListener
+监听 ScrollUpdateNotification 的通知。在 onNotification 触发时，会检测当前是否 焦点被聚焦 ，是的话，取消聚焦。
