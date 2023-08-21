@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../miss/miss_view.dart';
+import '../../db/storage_db.dart';
+import '../../model/love_story_model.dart';
 import '../setting/setting_font_view.dart';
 import '../setting/setting_language_view.dart';
 import 'bootombar.dart';
-import 'home_logic.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,6 +14,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+
+  @override
+  void initState() {
+    _loadWords();
+    super.initState();
+  }
   final List _tabPages = [
     const SettingFontPage(),
     const SettingLanguagePage(),
@@ -42,10 +46,18 @@ class _HomePageState extends State<HomePage> {
             iconData: Icons.search,
           ),
       ], onBarTap: (index){
-     setState(() {
+        setState(() {
        selectedIndex = index;
-     });
+        });
       },)
     );
   }
+
+  void _loadWords() async{
+    List<LoveStoryWords> words;
+    words = await StorageDb.instance.loveWordDao.query();
+
+    print("startContent${ words.first.startContent}================================");
+  }
 }
+

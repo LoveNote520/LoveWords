@@ -45,6 +45,8 @@ dependencies:
   flutter_smart_dialog: ^4.9.1 #多功能弹窗
   bot_toast: ^4.0.4 #吐司
   web_socket_channel: ^2.4.0 #scket长连接
+  path_provider: ^2.1.0 #一个用于查找文件系统中常用位置
+  sqflite_common_ffi: ^2.3.0+2 #支持事务和批处理打开期间的自动版本管理用于插入/查询/更新/删除查询的帮助器在 iOS 和 Android 的后台线程中执行 DB 操作
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +71,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/data/data.txt
+    - assets/data/love_words
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

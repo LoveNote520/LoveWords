@@ -335,3 +335,6 @@ enum ScrollViewKeyboardDismissBehavior {
 manual 和 onDrag 的效果如下：当前 键盘弹出时，如果为 manual ，列表滑动过程中键盘不会主动隐藏 。为 onDrag 时，滑动列表时，键盘会主动隐藏
 现在再回到 ScrollView#build 方法的处理中，可以看到 keyboardDismissBehavior 属性为 onDrag 时，会在外层嵌套一个 NotificationListener
 监听 ScrollUpdateNotification 的通知。在 onNotification 触发时，会检测当前是否 焦点被聚焦 ，是的话，取消聚焦。
+
+这样看来， ListView#itemExtent 和 ListView#prototypeItem 两个属性的根本原来是类似的，只是在实现方式上有差异，适用于不同的场合。
+当明确条目尺寸具体大小时，可以使用 itemExtent 属性直接指定；反之可以使用 prototypeItem 属性提供一个组件，来确定条目尺寸。

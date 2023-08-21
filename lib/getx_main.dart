@@ -3,12 +3,15 @@ import 'package:counter/utils/keys.dart';
 import 'package:counter/utils/sp_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'db/dao/app.dart';
+import 'db/storage_db.dart';
 import 'getx_module/index.dart';
 import 'index.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SpUtil.instance.init();
+  await App().initCopy();
   initData();
   runApp(MyApp());
 }
