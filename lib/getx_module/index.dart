@@ -30,3 +30,4 @@ export 'home/home_binding.dart';
 export 'home/home_logic.dart';
 export 'home/home_state.dart';
 export 'home/home_view.dart';
+export 'draw_animation/wave_animation.dart';

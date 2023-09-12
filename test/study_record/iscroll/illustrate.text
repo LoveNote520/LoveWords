@@ -310,10 +310,21 @@ anchor 类型为 double ，它表示 零偏移量的相对位置。如下左图�
   shrinkWrap 成员在源码的 buildViewport 方法中被使用，该方法用于创建视口组件。
 
 当 shrinkWrap 为 true 时，会返回 ShrinkWrappingViewport 组件，否则返回 Viewport 组件。
-这样 shrinkWrap 的作用就上升为 ShrinkWrappingViewport 与 Viewport 组件的差异性。这时可能有人会好奇，这两个视口组件有什么不同呢？
+这样 shrinkWrap 的作用
+就上升为 ShrinkWrappingViewport 与 Viewport 组件的差异性。这时可能有人会好奇，这两个视口组件有什么不同呢？
+
 。使用 Viewport ，可见其尺寸是 沿主轴方向延伸，
  ShrinkWrappingViewport 组件，会根据子组件的尺寸，确定自身尺寸。
 
+可能会有人疑惑：那为什么需要 ShrinkWrappingViewport 呢？因为 Viewport 组件的大小会在主轴方向上，根据父节点的盒约束尽可能延展。
+但如果父节点的在主轴上无约束，就会导致 Viewport 组件无法确定大小而报错，这种情况下只能使用 ShrinkWrappingViewport 组件。
+但个人来看，这种场景并不常见，一般来说滑动的视口在主轴方向都会有约束。
+所以关于 ShrinkWrappingViewport 大家了解一下即可，它在 Flutter 源码中也没有任何实际的应用。
+
+
+
+## 组件没有尺寸的概念，只有渲染对象 RenderObject负责布局与绘制，
+本身也没有 size 属性。尺寸是 RenderObject 子类 RenderBox 的属性，也就是说只有 RenderBox 及其子类才有尺寸的概念。
 primary 属性的作用就非常明显了，它可以决定是否使用上层 PrimaryScrollController 组件提供的滑动控制器。
 
 primary 属性为true 时，会通过上层的 PrimaryScrollController 组件获取默认的滑动控制器。
@@ -338,3 +349,77 @@ manual 和 onDrag 的效果如下：当前 键盘弹出时，如果为 manual �
 
 这样看来， ListView#itemExtent 和 ListView#prototypeItem 两个属性的根本原来是类似的，只是在实现方式上有差异，适用于不同的场合。
 当明确条目尺寸具体大小时，可以使用 itemExtent 属性直接指定；反之可以使用 prototypeItem 属性提供一个组件，来确定条目尺寸。
+
+
+
+
+
+ ===================================================================Sliver的使用===============================================
+
+  SliverPersistentHeader 的使用
+
+class FlexibleSPHD extends SliverPersistentHeaderDelegate {
+  final double max;
+  final double min;
+
+  FlexibleSPHD({required this.max, required this.min});
+    @override
+    Widget build( BuildContext context, double shrinkOffset, bool overlapsContent) {
+
+      //通过偏移量做些有意思的事情
+     // 当然也可以让内容块更复杂：比如下面用 Stack 叠放图片、色块、文字，其中图片根据滑动的进度用 Opacity 进行渐变处理，对文字的位置进行偏移运动。
+      double progress = shrinkOffset / (max - min);
+      progress = progress > 1 ? 1 : progress;
+
+      return Stack(
+        fit: StackFit.expand,
+        alignment: Alignment.topCenter,
+        children: [
+          Container(
+            color: Color.lerp(Colors.blue, Colors.red, progress),
+            alignment: Alignment.center,
+          ),
+          Opacity(
+              opacity: 1 - progress,
+              child: Image.asset("assets/images/sabar.webp", fit: BoxFit.cover)),
+          Align(
+            alignment:
+            AlignmentTween(begin: Alignment(0, -0.8), end: Alignment(0, 0))
+                .transform(progress),
+            child: Text(
+              'FixedPersistentHeader',
+              style: TextStyle(
+                  color: progress > 0.6 ? Colors.white : Colors.black,
+                  fontSize: Tween(begin: 20.0, end: 16.0).transform(progress),
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      );
+    }
+
+    @override
+    double get maxExtent => max;
+
+    @override
+    double get minExtent => min;
+
+    @override
+    bool shouldRebuild(covariant FlexibleSPHD oldDelegate) {
+      return oldDelegate.min != min || oldDelegate.max != max;
+    }
+  }
+
+ 使用
+  SliverPersistentHeader(
+      pinned: true,
+      delegate: FlexibleSPHD(min: 50, max: 150), // tag1
+    );
+
+
+
+SliverAppBar 在滑动中的行为
+
+pinned	bool	false	固定头部
+floating	bool	false	浮动头部
+snap	bool	false	下滑出现 ,snap 只能在 floating 为 true 时，才可以被置为 true 。

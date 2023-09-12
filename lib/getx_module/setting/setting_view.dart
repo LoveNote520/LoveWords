@@ -1,12 +1,13 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import '../index.dart';
 
 class SettingPage extends StatelessWidget {
   SettingPage({Key? key}) : super(key: key);
 
-  final logic = Get.find<SettingLogic>();
+  final logic = Get.put(SettingLogic());
   final state = Get.find<SettingLogic>().state;
   final langCtrl = Get.put(LocalizationService());
 
@@ -24,216 +25,48 @@ class SettingPage extends StatelessWidget {
           })),
       body: ListView(
         children: [
-          ColoredBox(
-            color: Color(0xffc6eecc),
-            child: ListTile(
-              leading: const Icon(
-                Icons.font_download,
-                color: Color(0xffB4D2FF),
-              ),
-              title: Obx(() {
-                return Text('切换字体'.tr,
-                    style: TextStyle(fontSize: 16, fontFamily: Get.find<FontController>().selectedFont.value));
-              }),
-              onTap: () {
-                Get.to(const SettingFontPage());
-              },
-            ),
-          ),
-          ColoredBox(
-            color: Color(0xffc4bfe9),
-            child: ListTile(
-              leading: const Icon(
-                Icons.language,
-                color:Color(0xffB4D2FF),
-              ),
-              title: Obx(() {
-                return Text('切换语言'.tr,
-                    style: TextStyle(fontSize: 16, fontFamily: Get.find<FontController>().selectedFont.value));
-              }),
-              onTap: () {
-                Get.to(const SettingLanguagePage());
-              },
-            ),
-          ),
-          ColoredBox(
-            color: Color(0xfff4b9a6),
-            child: ListTile(
-              leading: const Icon(
-                Icons.scatter_plot,
-                color: Color(0xffB4D2FF),
-              ),
-              title: Obx(() {
-                return Text('切换主题'.tr,
-                    style: TextStyle(fontSize: 16, fontFamily: Get.find<FontController>().selectedFont.value));
-              }),
-              onTap: () {
-              //懒得做主题切换，下次一定
-                BotToast.showText(text: '有生之年完成主题切换',duration: const Duration(seconds: 2,));
-              },
-            ),
-          ),
+          _settingItem(context,
+              title: '切换字体'.tr, icon: Icons.font_download, onTap: () => Get.to(const SettingFontPage())),
+          _settingItem(context,
+              title: '切换语言'.tr, icon: Icons.language, onTap: () => Get.to(const SettingLanguagePage())),
+          _settingItem(context,
+              title: '切换主题'.tr,
+              icon: Icons.scatter_plot,
+              onTap: () => BotToast.showText(
+                  text: '有生之年完成主题切换',
+                  duration: const Duration(
+                    seconds: 2,
+                  ))),
+          _settingItem(context, title: '添加唯一'.tr, icon: Icons.add, onTap: () => Get.toNamed(RouteConfig.addUniquePage)),
         ],
       ),
     );
   }
-}
 
-// class SettingPage extends StatelessWidget {
-//
-//   const SettingPage({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     const Widget divider =  Divider(height: 1);
-//
-//     return Scaffold(
-//       appBar: AppBar(title:const Text('应用设置')),
-//       body: ListView(
-//         children: <Widget>[
-//           Container( height: 15),
-//           ListTile(
-//             leading: Icon(
-//               Icons.style,
-//               color: Theme.of(context).primaryColor,
-//             ),
-//             title: const Text('深色模式', style:  TextStyle(fontSize: 16)),
-//             subtitle: BlocBuilder<AppBloc,AppState>(
-//               builder: (_,state)=>Text(
-//                   themeMode2Str[state.themeMode]!
-//                   , style:  const TextStyle(fontSize: 12,color: Colors.grey)
-//               ),
-//             ),
-//             trailing: _nextIcon(context),
-//             onTap: (){
-//               Navigator.of(context).push(Right2LeftRouter(child: const ThemeModelSetting()));
-//             },
-//           ),
-//           divider,
-//           ListTile(
-//             leading: Icon(
-//               Icons.palette,
-//               color: Theme.of(context).primaryColor,
-//             ),
-//             title: const Text('主题色设置', style:  TextStyle(fontSize: 16)),
-//             subtitle: BlocBuilder<AppBloc,AppState>(
-//               builder: (_,state)=>Text(
-//                 Cons.kThemeColorSupport[state.themeColor]!,
-//                 style: TextStyle(color: state.themeColor,fontSize: 12),
-//               ),
-//             ),
-//             trailing: _nextIcon(context),
-//             onTap: () => Navigator.of(context).pushNamed(UnitRouter.theme_color_setting),
-//           ),
-//           // divider,
-//           Container( height: 10),
-//           ListTile(
-//             leading: Icon(
-//               Icons.translate,
-//               color: Theme.of(context).primaryColor,
-//             ),
-//             title: const Text('字体设置', style:  TextStyle(fontSize: 16)),
-//             subtitle: BlocBuilder<AppBloc,AppState>(
-//               builder: (_,state)=>Text(
-//                 state.fontFamily,style: TextStyle(fontSize: 12),
-//               ),
-//             ),
-//             trailing: _nextIcon(context),
-//             onTap: () => Navigator.of(context).pushNamed(UnitRouter.font_setting),
-//           ),
-//           divider,
-//           ListTile(
-//             leading: Icon(
-//               TolyIcon.icon_code,
-//               color: Theme.of(context).primaryColor,
-//             ),
-//             title: const Text('代码高亮样式', style:  TextStyle(fontSize: 16)),
-//             trailing: _nextIcon(context),
-//             onTap: () => Navigator.of(context).pushNamed(UnitRouter.code_style_setting),
-//           ),
-//           // divider,
-//           Container( height: 10,),
-//           _buildShowBg(context),
-//           divider,
-//           _buildShowOver(context),
-//           // divider,
-//           // _buildShowTool(context),
-//           // divider,
-//           Container( height: 10),
-//           ListTile(
-//             leading: Icon(
-//               Icons.info,
-//               color: Theme.of(context).primaryColor,
-//             ),
-//             title: const Text('版本信息', style:  TextStyle(fontSize: 16)),
-//             trailing: _nextIcon(context),
-//             onTap: () => Navigator.of(context).pushNamed(UnitRouter.version_info),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-//
-// //SwitchListTile(
-// //             inactiveTrackColor: Colors.grey.withOpacity(0.3),
-// //             // inactiveThumbColor: Colors.white,
-// //             activeColor: Theme.of(context).primaryColor,
-// //                 value: state.showBackGround,
-// //                 secondary: Icon(
-// //                   TolyIcon.icon_background,
-// //                   color: Theme.of(context).primaryColor,
-// //                 ),
-// //                 title: const Text('显示背景', style:  TextStyle(fontSize: 16)),
-// //                 onChanged: (show) {
-// //                   BlocProvider.of<AppBloc>(context).switchShowBg(show);
-// //                 },
-// //               )
-//
-//   Widget _buildShowBg(BuildContext context) =>
-//       BlocBuilder<AppBloc, AppState>(
-//         builder: (_, state) =>           TolySwitchListTile(
-//           secondary:Icon(
-//             TolyIcon.icon_background,
-//             color: Theme.of(context).primaryColor,
-//           ),
-//           title: const Text('显示背景', style:  TextStyle(fontSize: 16,fontWeight: FontWeight.bold))
-//           , value: state.showBackGround, onChanged: (bool value) {
-//           BlocProvider.of<AppBloc>(context).switchShowBg(value);
-//         },
-//         ),);
-//
-//   Widget _buildShowOver(BuildContext context) =>
-//       BlocBuilder<AppBloc, AppState>(
-//           builder: (_, state) => TolySwitchListTile(
-//             secondary:Icon(
-//               TolyIcon.icon_background,
-//               color: Theme.of(context).primaryColor,
-//             ),
-//             title: const Text('显示性能浮层', style:  TextStyle(fontSize: 16,fontWeight: FontWeight.bold))
-//             , value: state.showPerformanceOverlay, onChanged: (bool value) {
-//             BlocProvider.of<AppBloc>(context).switchShowOver(value);
-//           },
-//           ));
-//
-//   Widget _buildShowTool(BuildContext context) =>
-//       BlocBuilder<AppBloc, AppState>(
-//           builder: (_, state) => SwitchListTile(
-//             value: state.showOverlayTool,
-//             secondary: Icon(
-//               TolyIcon.icon_layout,
-//               color: Theme.of(context).primaryColor,
-//             ),
-//             title: const Text('显示浮动工具', style:  TextStyle(fontSize: 16)),
-//             onChanged: (show) {
-//               if(show){
-//                 OverlayToolWrapper.of(context).showFloating();
-//               }else{
-//                 OverlayToolWrapper.of(context).hideFloating();
-//               }
-//               BlocProvider.of<AppBloc>(context).switchShowTool(show);
-//             },
-//           ));
-//
-//
-//   Widget _nextIcon(BuildContext context) => Icon(Icons.chevron_right, color: Theme.of(context).primaryColor);
-// }
+  Widget _settingItem(context, {String? title, IconData? icon, Callback? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Wrap(children: [
+          Icon(
+            icon,
+            color: const Color(0xff90b4d2),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          Obx(() {
+            return Text('$title',
+                style: TextStyle(fontSize: 16, fontFamily: Get.find<FontController>().selectedFont.value));
+          })
+        ]),
+      ),
+    );
+  }
+}

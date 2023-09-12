@@ -18,4 +18,5 @@ const Map<String, String> enUS = {
   "夏日":"the summer",
   "飞舞行书":"flying script",
   "圆圆":"round",
+  "添加唯一":"add only",
 };

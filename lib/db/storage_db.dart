@@ -12,6 +12,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqlite3/open.dart';
 import 'package:sqlite3/sqlite3.dart' as db;
 import 'dao/love_word_dao.dart';
+import 'dao/member_dao.dart';
 
 class StorageDb {
   static String DB_NAME = "love_words";
@@ -42,7 +43,9 @@ class StorageDb {
   late LoveWordDao _loveWordDao;
 
   LoveWordDao get loveWordDao => _loveWordDao;
+  late MemberDao _memberDao;
 
+  MemberDao get memberDao => _memberDao;
   ///开始建表
 
   Future<Database> open() async {
@@ -84,6 +87,7 @@ class StorageDb {
     _db = db;
     print('数据库打开....');
     _loveWordDao = LoveWordDao(db);
+    _memberDao = MemberDao(db);
   }
 
   Future<void> closeDb() async {
