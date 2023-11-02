@@ -31,7 +31,7 @@ class RouteConfig {
     ),
     GetPage(
       name: homePage,
-      page: () =>  HomePage(),
+      page: () =>  const HomePage(),
       binding: HomeBinding(),
     )
   ];
