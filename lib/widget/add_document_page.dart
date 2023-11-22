@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/extensions.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -71,7 +70,7 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
         minHeight: 200,
         maxHeight: 400,
         autoFocus: false,
-        enableSelectionToolbar: isMobile(),
+        enableSelectionToolbar: isMobile(supportWeb:false),
         expands: false,
         padding: EdgeInsets.zero,
         onTapOutside: (PointerDownEvent event, FocusNode focusNode) {
