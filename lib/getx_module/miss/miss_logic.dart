@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../http/http_manager.dart';
 import 'miss_state.dart';
 
 class MissLogic extends GetxController {
@@ -15,5 +17,12 @@ class MissLogic extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+  }
+
+
+  Future getEntry() async {
+    var response = await HttpManager.post('/api/word.php?m=json');
+    debugPrint("${response.data}");
+    return;
   }
 }

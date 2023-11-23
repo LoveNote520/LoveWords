@@ -4,13 +4,16 @@ import 'package:counter/utils/sp_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'db/dao/app.dart';
+
 // import 'db/storage_db.dart';
 import 'getx_module/index.dart';
+import 'http/http_manager.dart';
 import 'index.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SpUtil.instance.init();
+   HttpManager.init();
   await App().initCopy();
   initData();
   runApp(MyApp());
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [FlutterSmartDialog.observer],
 
       ///==路由初始化
-      initialRoute: RouteConfig.homePage,
+      initialRoute: RouteConfig.missPage,
       getPages: RouteConfig.getPages,
       //懒注入
       ///==多语言初始化
@@ -60,7 +63,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-void initData()  {
+
+void initData() {
   //初始化数据库数据
   var firstTime = SpUtil.getString(Keys.FIRST_TIME);
   debugPrint("===========================firstTime$firstTime=======================================");

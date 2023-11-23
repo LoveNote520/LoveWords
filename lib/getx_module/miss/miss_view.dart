@@ -4,6 +4,7 @@ import 'package:counter/getx_module/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../http/http_manager.dart';
 import '../../widget/animate_button.dart';
 import '../../widget/animate_text.dart';
 
@@ -11,15 +12,12 @@ class MissPage extends StatelessWidget {
   MissPage({Key? key}) : super(key: key);
 
   final logic = Get.find<MissLogic>();
-  final state = Get
-      .find<MissLogic>()
-      .state;
+  final state = Get.find<MissLogic>().state;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MissAppBar(
-
         setting: () {
           // Get.toNamed("/addUniquePage");
           Get.to(() => SettingPage(), binding: SettingBinding());
@@ -33,10 +31,20 @@ class MissPage extends StatelessWidget {
             height: 10,
           ),
           GetBuilder<MissLogic>(builder: (logic) {
-            return Center(
-                child: AnimateText(
-                  content: "想彬彬",
-                ));
+            return GestureDetector(
+              onTap: () {
+                logic.getEntry();
+              },
+              child: Column(
+                children: [
+                  Text("点击获取数据"),
+                  Center(
+                      child: AnimateText(
+                    content: "想彬彬",
+                  )),
+                ],
+              ),
+            );
           }),
           // Center(
           //   child: AnimateButton(
@@ -67,13 +75,7 @@ class MissAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Obx(() {
         return Text(
           'title'.tr,
-          style: TextStyle(
-              fontSize: 22,
-              fontFamily: Get
-                  .find<FontController>()
-                  .selectedFont
-                  .value
-          ),
+          style: TextStyle(fontSize: 22, fontFamily: Get.find<FontController>().selectedFont.value),
         );
       }),
       actions: [

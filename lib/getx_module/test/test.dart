@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
-
-
-
 class BottomBarNavigationPatternExample extends StatefulWidget {
   final List<BarItem> barItems = [
     BarItem(
