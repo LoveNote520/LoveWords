@@ -1,13 +1,9 @@
 import 'dart:async';
 
 import 'package:counter/db/update/db_updater.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
-import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqlite3/open.dart';
 import 'package:sqlite3/sqlite3.dart' as db;

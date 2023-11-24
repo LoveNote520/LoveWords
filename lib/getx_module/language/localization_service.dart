@@ -1,19 +1,16 @@
-import 'package:counter/getx_module/language/zh_ch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../utils/sp_util.dart';
 import '../index.dart';
-import 'en_us.dart';
-import 'fa_AF.dart';
 
 // ui.window.locale,读取系统的语言
 
 class LocalizationService extends Translations {
-  static final locale = Locale("zh", "CH");
-  static final fallBackLocale = Locale("en", "US");
+  static const locale = Locale("zh", "CH");
+  static const fallBackLocale = Locale("en", "US");
   static final langs = ['فارسی', 'English', '简体中文'];
-  static final locales = [Locale("fa", "AF"), Locale("en", "US"), Locale("zh", "CH")];
+  static final locales = [const Locale("fa", "AF"), const Locale("en", "US"), const Locale("zh", "CH")];
 
   late String selectedLang;
 

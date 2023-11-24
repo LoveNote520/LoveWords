@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-import '../theme/font.dart';
 import 'setting_state.dart';
 
 class SettingLogic extends GetxController {
@@ -8,10 +7,6 @@ class SettingLogic extends GetxController {
 
 
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {

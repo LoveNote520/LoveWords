@@ -58,7 +58,7 @@ class _CountdownAnimationState extends State<CountdownAnimation> with SingleTick
               decoration: BoxDecoration(
                   color: const Color(0xffE8E9fd),
                   borderRadius:
-                      BorderRadius.only(bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
+                      const BorderRadius.only(bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
                   border: Border.all(color: const Color(0xffccd8fc), width: 2)),
             ),
           ],
@@ -70,7 +70,7 @@ class _CountdownAnimationState extends State<CountdownAnimation> with SingleTick
           height: 100,
           decoration: BoxDecoration(
               color: const Color(0xffE8E9fd),
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
               border: Border.all(color: const Color(0xffccd8fc), width: 2)),
         ),
       ),
@@ -78,8 +78,8 @@ class _CountdownAnimationState extends State<CountdownAnimation> with SingleTick
         top:50,
         left: 40,
         child: Text(
-          "${_counter}",
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 100),
+          "$_counter",
+          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 100),
         ),
       ),
 

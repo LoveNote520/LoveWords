@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,7 +37,7 @@ late  Animation<double> _animation;
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
 
@@ -43,7 +45,7 @@ late  Animation<double> _animation;
   }
 
   void _startCountdown() {
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (_counter > 0) {
         _controller.reset();
         _controller.forward();
@@ -60,7 +62,7 @@ late  Animation<double> _animation;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Countdown'),
+        title: const Text('Flutter Countdown'),
       ),
       body: Center(
         child: AnimatedBuilder(
@@ -84,7 +86,7 @@ late  Animation<double> _animation;
             alignment: Alignment.center,
             child: Text(
               '$_counter',
-              style: TextStyle(fontSize: 50, color: Colors.white),
+              style: const TextStyle(fontSize: 50, color: Colors.white),
             ),
           ),
         ),

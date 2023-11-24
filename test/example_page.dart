@@ -198,7 +198,7 @@ class _ExamplePageState extends State<ExamplePage> {
     _receivePort = newReceivePort;
     _receivePort?.listen((data) {
       if (data is String) {
-        print('$data');
+        print(data);
       } else if (data is int) {
         print('$data');
       }
@@ -306,7 +306,7 @@ InlineSpan formSpan(String src, String pattern) {
     span.add(TextSpan(text: parts[i]));
     if (i != parts.length - 1) {
       // 插入匹配字符 [样式高亮]
-      span.add(TextSpan(text: pattern, style: TextStyle(color: Colors.cyan)));
+      span.add(TextSpan(text: pattern, style: const TextStyle(color: Colors.cyan)));
     }
   }
   return TextSpan(children: span);
@@ -337,7 +337,7 @@ InlineSpan formSpan2(String src, String pattern) {
     if (i != parts.length - 1) {
       ///高亮的部分
       String matchValue = allMatches[i].group(0)??'';
-      span.add(TextSpan(text: matchValue, style:  TextStyle(color: Colors.cyan)));
+      span.add(TextSpan(text: matchValue, style:  const TextStyle(color: Colors.cyan)));
     }
   }
   return TextSpan(children: span);

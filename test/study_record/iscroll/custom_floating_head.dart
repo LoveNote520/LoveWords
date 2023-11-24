@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 ///参考意义在于浮动与固定，利用偏移量做事情
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -13,6 +13,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,7 +49,7 @@ class HomePage extends StatelessWidget {
           ),
           _buildStickBox2(),
           SliverPadding(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             sliver: _buildSliverGrid(),
           ),
           _buildSliverList(),
@@ -79,7 +81,7 @@ class HomePage extends StatelessWidget {
         _buildItemByIndex,
         childCount: 8,
       ),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
         crossAxisSpacing: 8,
         childAspectRatio: 1,
@@ -105,8 +107,7 @@ class HomePage extends StatelessWidget {
 class ItemBox extends StatelessWidget {
   final int index;
 
-  ItemBox({
-    Key? key,
+  const ItemBox({super.key,
     required this.index,
   });
 
@@ -137,7 +138,7 @@ class FixedPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
       height: height,
       alignment: Alignment.center,
       color: Colors.red,
-      child: Text(
+      child: const Text(
         'FixedPersistentHeader',
         // 'FixedPersistentHeader:${shrinkOffset.toStringAsFixed(1)}',
         style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
@@ -228,7 +229,7 @@ class FlexibleSPHD extends SliverPersistentHeaderDelegate {
             child: Container( color: Colors.indigoAccent,)),
         Align(
           alignment:
-          AlignmentTween(begin: Alignment(0, -0.8), end: Alignment(0, 0))
+          AlignmentTween(begin: const Alignment(0, -0.8), end: const Alignment(0, 0))
               .transform(progress),
           child: Text(
             'FixedPersistentHeader',

@@ -33,9 +33,9 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         body: Column(
           children: [
-            SizedBox(height: 200,),
-            AnimateText(),
-            SizedBox(height: 100,),
+            const SizedBox(height: 200,),
+            const AnimateText(),
+            const SizedBox(height: 100,),
             Center(
               child: GestureDetector(
                 onTap: () {
@@ -51,19 +51,19 @@ class _HomePageState extends State<HomePage> {
                     width: 50,
 
                     alignment: Alignment.center,
-                    child: const Text("11",style: TextStyle(fontSize: 12,color: Colors.white),),
                   decoration: BoxDecoration(
                   //  shape: BoxShape.circle,
                     color: Colors.blue,
                     border: SimpleBoder()
 
                   ),
+                    child: const Text("11",style: TextStyle(fontSize: 12,color: Colors.white),),
                 ),
               ),
 
             ),
-            AnimateButton(),
-            PaintPage(),
+            const AnimateButton(),
+            const PaintPage(),
           ],
         ),
       ),
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
     _receivePort = newReceivePort;
     _receivePort?.listen((data) {
       if (data is String) {
-        print('$data');
+        print(data);
       } else if (data is int) {
         print('$data');
       }
@@ -163,7 +163,7 @@ class SimpleBoder extends BoxBorder {
   }
   @override
   // TODO: implement bottom
-  BorderSide get bottom => BorderSide(
+  BorderSide get bottom => const BorderSide(
 
   );
 
@@ -173,7 +173,7 @@ class SimpleBoder extends BoxBorder {
 
   @override
   // TODO: implement top
-  BorderSide get top => BorderSide(
+  BorderSide get top => const BorderSide(
 
   );
 

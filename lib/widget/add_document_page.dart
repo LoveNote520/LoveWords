@@ -27,7 +27,7 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("添加描述"),
+        title: const Text("添加描述"),
         actions: [
           IconButton(
             onPressed: () {
@@ -47,7 +47,7 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: quillToolbar,
                 ),
                 Container(
