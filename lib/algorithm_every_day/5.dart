@@ -29,12 +29,47 @@ void main() {
                             val: 8,
                           )))))));
 
-  getEvenNodes(node);
+  addNodeAfter(node, 6, 4);
 
   // print(getEvenNodes(node).toString());
 }
 
-find() {}
+/// TODO: 在链表 node 第一个值为 target的节点后，插入一个 value 的新节点。
+/// 说明: 如果链表中没有 target 节点，将 value 节点加到链表最后。
+/// 输入：链表 a = [0->3->2->8], target = 3; value=5
+/// 输出：链表 a = [0->3->5->2->8]
+///
+
+ListNode? addNodeAfter(ListNode node, int target, int value) {
+  ListNode? cur = node;
+  ListNode d = ListNode(val: value);
+  while (cur != null) {
+    if (cur.val == target) {
+      d.next = cur.next;
+      cur.next = d;
+      break;
+    }
+    if (cur.next == null) {
+      cur.next = d;
+      break;
+    }
+    cur = cur.next;
+  }
+
+  return node;
+}
+
+// ListNode? addNodeAfter(ListNode node, int target, int value) {
+//   if (node == null) return null;
+//   if (node.val == target) {
+//     ListNode newNode = ListNode(val: value);
+//     newNode.next = node.next;
+//     node.next = newNode;
+//     return node;
+//   }
+//   node.next = addNodeAfter(node.next, target, value);
+//   return node;
+// }
 
 /// [2023.11.27]
 /// TODO: 完成  getEvenNodes 方法, 返回所有偶数节点依次形成的链表
