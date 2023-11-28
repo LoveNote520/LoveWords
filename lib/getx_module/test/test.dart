@@ -270,7 +270,7 @@ class _AnimatedBottomBarState extends State<AnimatedBottomBar> with TickerProvid
               color: isSelected
                   ? item.color.withOpacity(0.15)
                   : Colors.transparent,
-              borderRadius: BorderRadius.all(Radius.circular(30))),
+              borderRadius: const BorderRadius.all(Radius.circular(30))),
           child: Row(
             children: <Widget>[
               Icon(
@@ -278,7 +278,7 @@ class _AnimatedBottomBarState extends State<AnimatedBottomBar> with TickerProvid
                 color: isSelected ? item.color : Colors.black,
                 size: widget.barStyle.iconSize,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 5.0,
               ),
               AnimatedSize(

@@ -2,21 +2,25 @@ import 'package:flutter/material.dart';
 
 import 'package:flip_card/flip_card.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FlipCard',
       theme: ThemeData.dark(),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   _renderBg() {
     return Container(
       decoration: const BoxDecoration(color: Color(0xFFFFFFFF)),

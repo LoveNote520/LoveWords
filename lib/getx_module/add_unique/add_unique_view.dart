@@ -144,7 +144,7 @@ class AddUniquePage extends StatelessWidget {
               ),
               label: Container(
                 decoration: BoxDecoration(color: Colors.yellow, borderRadius: BorderRadius.circular(10)),
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: const Text("添加"),
               ),
             ),
@@ -154,7 +154,7 @@ class AddUniquePage extends StatelessWidget {
             const EndDrawerButton(),
             IconButton(onPressed: () {}, icon: Container()),
             ToggleButtons(
-              isSelected: [true, false, true],
+              isSelected: const [true, false, true],
               onPressed: (int index) {},
               children: const <Widget>[
                 Icon(Icons.ac_unit),
@@ -162,9 +162,9 @@ class AddUniquePage extends StatelessWidget {
                 Icon(Icons.cake),
               ],
             ),
-            DropdownButton(items: [], onChanged: (i) {}),
+            DropdownButton(items: const [], onChanged: (i) {}),
             DropdownButtonFormField<String>(
-              items: [],
+              items: const [],
               onChanged: (Object? value) {},
             ),
             InkResponse(
@@ -185,32 +185,32 @@ class AddUniquePage extends StatelessWidget {
                         //   title:Text("111111"),
                         // );
 
-                        return   CustomizeDialog();
+                        return   const CustomizeDialog();
                       });
                 },
-                child: Text("一个自定义弹窗")),
+                child: const Text("一个自定义弹窗")),
             ElevatedButton(
                 onPressed: () {
                   showDialog<String>(
                       context: context,
                       builder: (c) {
-                        return AlertDialog(
+                        return const AlertDialog(
                           title:Text("111111"),
                         );
                       });
                 },
-                child: Text("一个弹窗")),
-            AboutDialog(
+                child: const Text("一个弹窗")),
+            const AboutDialog(
               applicationName: "一个app",
             ),
-            Dialog.fullscreen(child: Text( "哈哈哈"), ),
+            const Dialog.fullscreen(child: Text( "哈哈哈"), ),
             // const AlertDialog(
             //     title:Text("111111"),
             // ),
             CupertinoAlertDialog(
 
               content: Container(
-                child: Text("ios的弹窗"),
+                child: const Text("ios的弹窗"),
               ),
             ),
             const SizedBox(

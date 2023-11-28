@@ -19,10 +19,10 @@ class _MissYouPageState extends State<MissYouPage> {
           NavigatorUtil.goNewPageFadeRouter(context, const SettingPage());
         },
       ),
-      body: Column(
+      body: const Column(
         children: [
-          const SizedBox(height: kToolbarHeight),
-          const SizedBox(
+          SizedBox(height: kToolbarHeight),
+          SizedBox(
             height: 10,
           ),
           Center(

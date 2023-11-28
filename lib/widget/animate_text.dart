@@ -50,7 +50,7 @@ class _AnimateTextState extends State<AnimateText> with SingleTickerProviderStat
           position: position,
           child: FadeTransition(
             opacity: opacity,
-            child:  Text(widget.content??'想立立',style: TextStyle(fontSize: 24,color: Colors.pinkAccent,fontFamily: "mo")),
+            child:  Text(widget.content??'想立立',style: const TextStyle(fontSize: 24,color: Colors.pinkAccent,fontFamily: "mo")),
           )),
     );
   }

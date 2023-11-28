@@ -1,11 +1,7 @@
-import 'package:counter/getx_module/add_unique/add_unique_binding.dart';
-import 'package:counter/getx_module/add_unique/add_unique_view.dart';
 import 'package:counter/getx_module/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../http/http_manager.dart';
-import '../../widget/animate_button.dart';
 import '../../widget/animate_text.dart';
 
 class MissPage extends StatelessWidget {
@@ -35,7 +31,7 @@ class MissPage extends StatelessWidget {
               onTap: () {
                 logic.getEntry();
               },
-              child: Column(
+              child: const Column(
                 children: [
                   Text("点击获取数据"),
                   Center(

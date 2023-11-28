@@ -50,7 +50,7 @@ class _WaveAnimationState extends State<WaveAnimation> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: widget.width,
         height: widget.height,
         child: CustomPaint(
@@ -101,7 +101,7 @@ class Wave extends CustomPainter {
         Color(0xff2b63d2),
         Color(0xfff710aa),
       ],
-    ).createShader(Rect.fromPoints(Offset(0, 0), Offset(400, 100)));
+    ).createShader(Rect.fromPoints(const Offset(0, 0), const Offset(400, 100)));
 
     _mainPaint = Paint()
       ..shader = color == null ? shader : null

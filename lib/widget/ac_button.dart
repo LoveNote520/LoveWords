@@ -1,5 +1,4 @@
 import 'package:counter/model/color_model.dart';
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -21,7 +21,7 @@ class CustomizeDialog extends StatelessWidget {
           // borderRadius: BorderRadius.circular(10),
           clipBehavior: Clip.none,
           child: Container(
-            child: Text("这是个弹窗"),
+            child: const Text("这是个弹窗"),
           ),
         ),
       ),
@@ -29,8 +29,8 @@ class CustomizeDialog extends StatelessWidget {
 
     return SafeArea(
       child: AnimatedPadding(
-        padding: EdgeInsets.all(10),
-        duration: Duration(seconds: 5),
+        padding: const EdgeInsets.all(10),
+        duration: const Duration(seconds: 5),
         curve: Curves.linear,
         child: MediaQuery.removeViewInsets(
           removeLeft: true,

@@ -1,15 +1,12 @@
-import 'package:counter/getx_module/test/test.dart';
-import 'package:counter/getx_module/test/test3.dart';
 import 'package:flutter/material.dart';
 
-import '../setting/setting_font_view.dart';
-import '../setting/setting_language_view.dart';
 import '../home/bootombar.dart';
-import '../home/home_view.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

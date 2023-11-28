@@ -14,21 +14,85 @@
 
 void main() {
   ListNode node = ListNode(
-      val: 4,
+      val: 1,
       next: ListNode(
-          val: 3,
+          val: 9,
           next: ListNode(
-              val: 2,
+              val: 9,
               next: ListNode(
-                val: 1,
-              ))));
+                  val: 4,
+                  next: ListNode(
+                      val: 0,
+                      next: ListNode(
+                          val: 3,
+                          next: ListNode(
+                            val: 8,
+                          )))))));
 
-  print(node.size());
-  node.deleteAt(3);
-  print(node.size());
+  addNodeAfter(node, 6, 4);
+
+  // print(getEvenNodes(node).toString());
 }
 
-find() {}
+/// TODO: 在链表 node 第一个值为 target的节点后，插入一个 value 的新节点。
+/// 说明: 如果链表中没有 target 节点，将 value 节点加到链表最后。
+/// 输入：链表 a = [0->3->2->8], target = 3; value=5
+/// 输出：链表 a = [0->3->5->2->8]
+///
+
+ListNode? addNodeAfter(ListNode node, int target, int value) {
+  ListNode? cur = node;
+  ListNode d = ListNode(val: value);
+  while (cur != null) {
+    if (cur.val == target) {
+      d.next = cur.next;
+      cur.next = d;
+      break;
+    }
+    if (cur.next == null) {
+      cur.next = d;
+      break;
+    }
+    cur = cur.next;
+  }
+
+  return node;
+}
+
+// ListNode? addNodeAfter(ListNode node, int target, int value) {
+//   if (node == null) return null;
+//   if (node.val == target) {
+//     ListNode newNode = ListNode(val: value);
+//     newNode.next = node.next;
+//     node.next = newNode;
+//     return node;
+//   }
+//   node.next = addNodeAfter(node.next, target, value);
+//   return node;
+// }
+
+/// [2023.11.27]
+/// TODO: 完成  getEvenNodes 方法, 返回所有偶数节点依次形成的链表
+/// 输入：链表 a = [1->9->9->4->0->3->2->8]
+/// 输出：链表 a = [1->9->0->2]
+/// 说明 : 计数从 0 开始，第一个节点为偶数
+ListNode? getEvenNodes(ListNode node) {
+  ListNode? f = node;
+  ListNode? s = node.next;
+  int count = 0;
+  while (f != null || s != null) {
+    s = s?.next;
+    if (count % 2 == 0) {
+      f?.next = s?.next;
+    } else {
+      f = f?.next;
+      s = s?.next;
+    }
+    count += 1;
+  }
+
+  return node;
+}
 
 class ListNode {
   int val;
@@ -80,11 +144,8 @@ class ListNode {
   //   return length;
   // }
 
-
-
-
-   ListNode ? removeNthFromEnd(ListNode head, int n) {
-    ListNode dummy =  ListNode(val:0, next: head);
+  ListNode? removeNthFromEnd(ListNode head, int n) {
+    ListNode dummy = ListNode(val: 0, next: head);
     ListNode? first = head;
     ListNode? second = dummy;
     for (int i = 0; i < n; ++i) {
@@ -95,18 +156,16 @@ class ListNode {
       second = second?.next;
     }
     second?.next = second.next?.next;
-    ListNode ?ans = dummy.next;
+    ListNode? ans = dummy.next;
     return ans;
   }
-
 }
 
 //动态规划思想  对于一个子串而言，如果它是回文串，并且长度大于 2，那么将它首尾的两个字母去除之后，
 // 它仍然是个回文串。例如对于字符串 “ababa”，
 // 如果我们已经知道 “bab” 是回文串，那么 “ababa” 一定是回文串，这是因为它的首尾两个字母都是 “a”。
 
-
- String longestPalindrome(String s) {
+String longestPalindrome(String s) {
   int len = s.length;
   if (len < 2) {
     return s;
@@ -154,7 +213,6 @@ class ListNode {
   return s.substring(begin, begin + maxLen);
 }
 
-
 // public String longestPalindrome(String s) {
 //   if (s == null || s.length() < 1) {
 //     return "";
@@ -179,4 +237,3 @@ class ListNode {
 //   }
 //   return right - left - 1;
 // }
-

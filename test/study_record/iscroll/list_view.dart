@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class HomePage extends StatelessWidget {
       /// ListView从这里也可以看出： ListView 的本质就是对 SliverList、SliverFixedExtentList 及和SliverPrototypeExtentList 三者的整合，
       /// 它的本身并没有非常复杂的地方。至于这三个 SliverXXXList 的区别，在 第八章 会从源码角度进行探索。
       ///
-      body:CustomScrollView(
+      body:const CustomScrollView(
         slivers: [
           SliverPadding( // tag1
             padding: EdgeInsets.all(8),
