@@ -70,7 +70,6 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
         minHeight: 200,
         maxHeight: 400,
         autoFocus: false,
-        enableSelectionToolbar: isMobile(),
         expands: false,
         padding: EdgeInsets.zero,
         onTapOutside: (PointerDownEvent event, FocusNode focusNode) {
