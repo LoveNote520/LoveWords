@@ -7,8 +7,8 @@ void main() {
   ListNode listNode1 = ListNode.array([1, 9, 9, 4, 0, 3, 8]);
 
   // print(findDuplicateIndexesFirst(listNode));
-  // print(reverse(listNode));
-  print(reverseFromProMax(listNode1,2));
+  print(reversePro(listNode1));
+  // print(reverseFromProMax(listNode1,2));
 }
 
 /// [2023.11.30]
@@ -68,6 +68,16 @@ ListNode? reverse(ListNode node) {
 
   return node;
 }
+
+
+ListNode? reversePro(ListNode ?head) {
+  if (head?.next == null) return head;
+  ListNode ?last = reversePro(head?.next);
+  head?.next?.next = head;
+  head?.next = null;
+  return last;
+}
+
 
 /// [2023.11.29]
 /// TODO: 从指定的索引处，反转之后的链表节点。
