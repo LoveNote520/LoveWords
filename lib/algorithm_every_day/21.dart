@@ -4,35 +4,57 @@ import 'list/3.dart';
 ///
 
 void main() {
-  ListNode listNode = ListNode.array([1,9, 9, 4, 0, 3, 8]);
+  ListNode listNode = ListNode.array([1, 9, 9, 4, 0, 3, 8]);
 
   ListNode listNode1 = ListNode.array([1, 2, 4, 5, 7, 8, 9]);
-  ListNode listNode2 = ListNode.array([1, 3, 4, 6, 7, 9,]);
+  ListNode listNode2 = ListNode.array([1, 3, 4, 6, 7, 9]);
   // print(mergeTwoLists(listNode1, listNode2));
-  print(reverseFrom(listNode,3));
+ print(mergeTwoListsPro(listNode1, listNode2));
+
+  // print(reverseFrom(listNode, 3));
+  // print(reverse(listNode));
 
   // print(addNodeAfter(listNode1, 3, 5));
   // print(recursiveTraversal(listNode1));
 }
-
 
 /// [2023.11.29]
 /// TODO: 从指定的索引处，反转之后的链表节点。
 /// 说明: 索引从 0 计数
 /// 输入：链表 a = [1->9->9->4->0->3->2->8], index = 3;
 /// 输出：链表  [1->9->9->4->8->2->3->0]
+
+///
+int a = -1;
+
 ListNode? reverseFrom(ListNode? node, int index) {
-  int a = 0;
   a += 1;
-  if(a == index){
-    while(node!=null){
-      node = node.next;
+  if (a > index) {
+    while (node?.next != null) {
+      // node =node?.next;
+      node = reverseFrom(node?.next, 3);
     }
+    return node;
+  } else {
+    node?.next = reverseFrom(node.next, index);
   }
-  node?.next = reverseFrom(node.next, index);
+
   return node;
 }
 
+ListNode? reverse(ListNode node) {
+  ListNode? cur = node;
+  ListNode? pre = ListNode(0, node);
+  for (int i = cur.size(); i > 0; i--) {
+    while (cur?.next != null) {
+      cur = cur?.next;
+      pre = pre?.next;
+    }
+    pre?.next = null;
+    cur?.next = pre;
+  }
+  return node;
+}
 
 ListNode? mergeTwoLists(ListNode list1, ListNode list2) {
   ListNode? newListNode = ListNode(
@@ -99,4 +121,3 @@ ListNode? addNodeAfter(ListNode? node, int target, int value) {
   node.next = addNodeAfter(node.next, target, value);
   return node;
 }
-

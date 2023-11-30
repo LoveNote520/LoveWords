@@ -11,9 +11,72 @@ void main() {
 
   // print(listNode.swapNextProMax(1).toString());
 
-  ListNode listNode = ListNode.array([1, 9, 9, 4, 0, 3, 2, 8]);
+  // ListNode listNode = ListNode.array([1, 9, 9, 4, 0, 3, 2, 8]);
+  ListNode listNode = ListNode.array([1, 1, 2, 2, 3, 3, ]);
   // ListNode? result = listNode.removeBetween(listNode,  3, 5);
-  print(getEvenNodes(listNode));
+  // print(addNodeAfter(listNode,7,5));
+  // print(addNodeAfterPro(node:listNode,7,5));
+  print(deleteDuplicates(listNode));
+}
+
+/// TODO: LeetCode 83. 删除有序链表中的重复元素
+/// 说明 : 链表节点已从小到大排序
+/// 输入：链表 a = [1,1,2,3,3]
+/// 输出：链表  [1,2,3]
+ListNode? deleteDuplicates(ListNode? node) {
+  ListNode? cur = node;
+  while (cur != null) {
+    if (cur.val == cur.next?.val) {
+      cur.next = cur.next?.next;
+    }
+    cur = cur.next;
+  }
+  return node;
+}
+
+/// TODO: 在链表 node 第一个值为 target的节点后，插入一个 value 的新节点。
+/// 说明: 如果链表中没有 target 节点，将 value 节点加到链表最后。
+/// 输入：链表 a = [0->3->2->8], target = 3; value=5
+/// 输出：链表 a = [0->3->5->2->8]
+///
+
+ListNode? addNodeAfter(ListNode node, int target, int value) {
+  ListNode? cur = node;
+  ListNode d = ListNode(value);
+  while (cur != null) {
+    if (cur.val == target) {
+      d.next = cur.next;
+      cur.next = d;
+      return node;
+    }
+    if (cur.next == null) {
+      cur.next = d;
+      return node;
+    }
+    cur = cur.next;
+  }
+
+  return node;
+}
+
+ListNode? addNodeAfterPro(
+  int target,
+  int value, {
+  ListNode? node,
+}) {
+  if (node == null) return ListNode(value);
+  if (node.val == target) {
+    ListNode newNode = ListNode(value);
+    newNode.next = node.next;
+    node.next = newNode;
+    return node;
+  }
+  node.next = addNodeAfterPro(
+    target,
+    value,
+    node: node.next,
+  );
+  return node;
 }
 
 /// [2023.11.27]
