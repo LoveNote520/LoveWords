@@ -2,14 +2,37 @@ import '3.dart';
 //翻转链表
 
 void main() {
-  ListNode listNode = ListNode.array([1, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6]);
+  ListNode listNode = ListNode.array([1,1 ,2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6,1,1]);
 
   ListNode listNode1 = ListNode.array([1, 9, 9, 4, 0, 3, 8]);
 
   // print(findDuplicateIndexesFirst(listNode));
-  print(reversePro(listNode1));
+  // print(reversePro(listNode1));
   // print(reverseFromProMax(listNode1,2));
+  print(removeElements(listNode,1));
 }
+
+/// [2023.12.01]
+/// TODO: 删除链表中指定值的所有节点。
+/// 输入：链表 node = [1,2,6,3,4,5,6]，val = 6;
+/// 输出：[1,2,3,4,5]
+///
+///
+
+ListNode? removeElements(ListNode node,int val) {
+  ListNode ?cur =ListNode(0,node);
+  while(cur!=null){
+    cur=cur.next;
+  }
+  return null;
+}
+
+
+
+
+
+
+
 
 /// [2023.11.30]
 /// TODO: 完成 findDuplicateIndexes 给定有序链表中，查询重复元素的索引。
