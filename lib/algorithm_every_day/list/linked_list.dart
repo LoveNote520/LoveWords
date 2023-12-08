@@ -1,3 +1,5 @@
+import 'package:counter/algorithm_every_day/2.dart';
+
 /// 定义单链表数据结构 SLinkedList<T>
 /// 说明: 泛型类型 T 可为任意类型
 /// 支持方法
@@ -21,7 +23,7 @@
 ///
 
 
-void main(){
+void main() {
   SLinkedList<int> sList = SLinkedList();
   sList.addAt(0, 1);
   sList.addAt(1, 2);
@@ -33,7 +35,7 @@ void main(){
   sList.removeAt(2);
   print(sList); // 3->4->2
 
-  sList.set(2,1);
+  sList.set(2, 1);
   print(sList); // 3->4->1
   print(sList.get(2)); //1
 
@@ -45,47 +47,62 @@ void main(){
 
   sList.removeFirst();
   print(sList); // 3->4->1->6
-  print(sList.size);//4
+  print(sList.size); //4
   sList.removeLast();
   print(sList); // 3->4->1
 
-   sList.addAt(2,4);
-   print(sList); // 3->4->4->1
+  sList.addAt(2, 4);
+  print(sList); // 3->4->4->1
 
-   int firstIndex = sList.firstIndexOf(4);
-   print(firstIndex); // 1
+  int firstIndex = sList.firstIndexOf(4);
+  print(firstIndex); // 1
 
   int lastIndex = sList.lastIndexOf(4);
   print(lastIndex); // 2
 
-   bool contains = sList.contains(3);
-   print(contains); // 1
+  bool contains = sList.contains(3);
+  print(contains); // 1
 
-   sList.addArrayAt(3, [999,998]);
-   print(sList); // 3->4->4->999->998->1
+  sList.addArrayAt(3, [999, 998]);
+  print(sList); // 3->4->4->999->998->1
   //
   List<int> ret = sList.removeBetween(2, 4);
   print(ret); // [4, 999, 998]
   print(sList); // 3->4->1
 }
+
 class SLinkedList<T> {
   final SListNode<T> _head = SListNode<T>(null);
 
   int _size = 0;
 
+
+
   void addAt(int index, T value) {
     if (index > _size) {
       throw const OutIndexException();
     }
+    // SListNode<T>? cur = _head;
+    // for (int i = 0; i < index; i++) {
+    //   cur = cur?.next;
+    // }
+    SListNode<T> newNode = SListNode(value);
+    // newNode.next = cur?.next;
+    // cur?.next = newNode;
+    _addNode(index, newNode);
+
+    _size++;
+  }
+
+  void _addNode(int index, SListNode<T> node) {
     SListNode<T>? cur = _head;
     for (int i = 0; i < index; i++) {
       cur = cur?.next;
     }
-    SListNode<T> newNode = SListNode(value);
-    newNode.next = cur?.next;
-    cur?.next = newNode;
-    _size++;
+    node.next = cur?.next;
+    cur?.next = node;
   }
+
 
   void removeAt(int index) {
     if (index >= _size) {
@@ -143,7 +160,7 @@ class SLinkedList<T> {
   }
 
   void removeLast() {
-    removeAt(_size-1);
+    removeAt(_size - 1);
   }
 
   void removeFirst() {
@@ -174,8 +191,7 @@ class SLinkedList<T> {
   }
 
   int lastIndexOf(T value) {
-
-    return _indexOf(value,start:false);
+    return _indexOf(value, start: false);
   }
 
   bool contains(T value) {
@@ -203,6 +219,16 @@ class SLinkedList<T> {
     _size = _size - (end - start);
     return removeValue;
   }
+
+  /// [2023.12.07]
+  /// 通过列表构造
+  /// SLinkedList.array(List<T> values) 构造
+  ///
+  /// 截取 [start,end) 范围内的元素，返回一个新的 SLinkedList 对象:
+  /// 注: 索引从 0 计数, 包含 start 不包含 end
+  ///     截取不影响当前链表元素
+  /// SLinkedList<T> slice(int start, int end)
+
 
   @override
   String toString() {
