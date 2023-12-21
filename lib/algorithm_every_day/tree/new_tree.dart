@@ -27,19 +27,19 @@ class NewTree {
     printTreeNode(_newNode, 0);
   }
 
+  List<int> nodesDepth = [];
   void printTreeNode(TreeNode? node, int depth) {
     if (node == null) {
       return;
     }
     String result = "";
     int i = 0;
-    int depth0 = -1;
+    if (node.left != null && node.right != null) {
+      nodesDepth.add(depth + 1);
+    }
     while (i < depth) {
-      if (node.left != null && node.right != null) {
-        depth0 = depth;
-        result += "|  ";
-      } else if (depth0 == depth) {
-        result += "|";
+      if (i == 0 || (nodesDepth.contains(i)  )) {
+        result += "| ";
       } else {
         result += "  ";
       }
