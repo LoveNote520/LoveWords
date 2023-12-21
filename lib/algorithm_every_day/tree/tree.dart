@@ -57,13 +57,13 @@ enum TreeNodeType {
 
 void main() {
   Tree tree = Tree();
-  TreeNode root = TreeNode(val: 1, depth: 0);
-  TreeNode left1 = TreeNode(val: 9, depth: 1);
-  TreeNode right1 = TreeNode(val: 9, depth: 1);
-  TreeNode left2 = TreeNode(val: 4, depth: 2);
-  TreeNode right2 = TreeNode(val: 0, depth: 2);
-  TreeNode left3 = TreeNode(val: 3, depth: 2);
-  TreeNode right3 = TreeNode(val: 2, depth: 2);
+  TreeNode root = TreeNode(val: 1, );
+  TreeNode left1 = TreeNode(val: 9, );
+  TreeNode right1 = TreeNode(val: 9, );
+  TreeNode left2 = TreeNode(val: 4, );
+  TreeNode right2 = TreeNode(val: 0, );
+  TreeNode left3 = TreeNode(val: 3, );
+  TreeNode right3 = TreeNode(val: 2, );
 
   tree.addNode(root, TreeNodeType.root);
   tree.addNode(right1, TreeNodeType.right, parent: root);
@@ -112,7 +112,7 @@ class Tree {
     if (node == null) {
       return;
     }
-    print('${node.val} (Depth: ${node.depth})');
+    print('${node.val} (Depth: $depth)');
     printTreeNode(node.right, depth + 1);
     printTreeNode(node.left, depth + 1);
   }
