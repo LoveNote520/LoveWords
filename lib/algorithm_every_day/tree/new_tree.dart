@@ -18,20 +18,43 @@ void main() {
   // TreeNode right = TreeNode(val: "release", left: rightL);
   // TreeNode left = TreeNode(val: "debug", left: leftL);
   // TreeNode node = TreeNode(val: "javac", left: left, right: right);
-  TreeNode rightC = TreeNode(val: "G");
-  TreeNode leftC = TreeNode(val: "F");
-  TreeNode rightB = TreeNode(val: "E");
-  TreeNode leftB = TreeNode(val: "D");
-  TreeNode right = TreeNode(val: "C", left: leftC, right: rightC);
-  TreeNode left = TreeNode(val: "B", left: leftB, right: rightB);
-  TreeNode node = TreeNode(val: "A", left: left, right: right);
+  // TreeNode rightC = TreeNode(val: "G");
+  // TreeNode leftC = TreeNode(val: "F");
+  // TreeNode rightB = TreeNode(val: "E");
+  // TreeNode leftB = TreeNode(val: "D");
+  // TreeNode right = TreeNode(val: "C", left: leftC, right: rightC);
+  // TreeNode left = TreeNode(val: "B", left: leftB, right: rightB);
+  // TreeNode node = TreeNode(val: "A", left: left, right: right);
+  Map<String,dynamic> map = {
+    "val": 1,
+    "id": "00000000001",
+    "left": {
+      "id": "00000000002",
+      "val": 9,
+      "left": {"id": "00000000003", "val": 9},
+      "right": {"id": "00000000004", "val": 4}
+    },
+    "right": {
+      "id": "00000000005",
+      "val": 0,
+      "left": {
+        "id": "00000000006",
+        "val": 3,
+        "left": {"id": "00000000007", "val": 2}
+      },
+      "right": {"id": "00000000008", "val": 8}
+    }
+  };
+  TreeNode treeNode ;
+  treeNode = TreeNode.formJson(map)!;
+  treeNode['00000000007'] = 6;
+  // NewTree tree = NewTree(treeNode!);
+  // tree.printTree();
 
-  NewTree tree = NewTree(node);
-  tree.printTree();
-
-  tree.ergodic(ErgodicType.preface);
-  tree.ergodic(ErgodicType.middleOrder);
-  tree.ergodic(ErgodicType.postOrder);
+  // tree.ergodic(ErgodicType.preface);
+  // tree.ergodic(ErgodicType.middleOrder);
+  // tree.ergodic(ErgodicType.postOrder);
+  print(treeNode.toJson());
 }
 
 class NewTree<T> {
@@ -123,6 +146,12 @@ class NewTree<T> {
     sequentialTraversal(node.left);
     sequentialTraversal(node.right);
     result.add(node.val);
+  }
+
+
+  void set(String id){
+
+
   }
 }
 

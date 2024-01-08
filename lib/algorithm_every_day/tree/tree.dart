@@ -55,28 +55,28 @@ enum TreeNodeType {
   right,
 }
 
-void main() {
-  Tree tree = Tree();
-  TreeNode root = TreeNode(val: 1, );
-  TreeNode left1 = TreeNode(val: 9, );
-  TreeNode right1 = TreeNode(val: 9, );
-  TreeNode left2 = TreeNode(val: 4, );
-  TreeNode right2 = TreeNode(val: 0, );
-  TreeNode left3 = TreeNode(val: 3, );
-  TreeNode right3 = TreeNode(val: 2, );
-
-  tree.addNode(root, TreeNodeType.root);
-  tree.addNode(right1, TreeNodeType.right, parent: root);
-  tree.addNode(left1, TreeNodeType.left, parent: root);
-  tree.addNode(left2, TreeNodeType.left, parent: left1);
-  tree.addNode(right2, TreeNodeType.right, parent: left1);
-  tree.addNode(left3, TreeNodeType.left, parent: right1);
-  tree.addNode(right3, TreeNodeType.right, parent: right1);
-
-  // Print the tree
-  // print(tree.getNode());
-  tree.printTree();
-}
+// void main() {
+//   Tree tree = Tree();
+//   TreeNode root = TreeNode(val: 1, );
+//   TreeNode left1 = TreeNode(val: 9, );
+//   TreeNode right1 = TreeNode(val: 9, );
+//   TreeNode left2 = TreeNode(val: 4, );
+//   TreeNode right2 = TreeNode(val: 0, );
+//   TreeNode left3 = TreeNode(val: 3, );
+//   TreeNode right3 = TreeNode(val: 2, );
+//
+//   tree.addNode(root, TreeNodeType.root);
+//   tree.addNode(right1, TreeNodeType.right, parent: root);
+//   tree.addNode(left1, TreeNodeType.left, parent: root);
+//   tree.addNode(left2, TreeNodeType.left, parent: left1);
+//   tree.addNode(right2, TreeNodeType.right, parent: left1);
+//   tree.addNode(left3, TreeNodeType.left, parent: right1);
+//   tree.addNode(right3, TreeNodeType.right, parent: right1);
+//
+//   // Print the tree
+//   // print(tree.getNode());
+//   tree.printTree();
+// }
 
 class Tree {
   TreeNode? _root;
