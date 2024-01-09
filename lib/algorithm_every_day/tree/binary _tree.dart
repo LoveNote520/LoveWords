@@ -104,12 +104,11 @@ class BinaryTree<T extends Comparable> {
     if (node1.val!.compareTo(node2.val) < 0) {
       root = node1;
       root.right = mergeTrees(node1.right, node2);
-      return root;
     } else {
       root = node2;
       root.left = mergeTrees(node1, node2.left);
-      return root;
     }
+    return root;
   }
 
   List<T?> list = [];
