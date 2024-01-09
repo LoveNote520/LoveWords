@@ -47,7 +47,6 @@ class BinaryTree<T extends Comparable> {
     return _findValuePro(root, type: "min")!;
   }
 
-
   T? _findValue(TreeNode<T>? node, {String? type = "max"}) {
     if (node == null) return null;
     if (type == "max") {
@@ -61,8 +60,7 @@ class BinaryTree<T extends Comparable> {
         maxValue = rightMax;
       }
       return maxValue;
-    }
-    else {
+    } else {
       T? minValue = node.val;
       T? leftMin = _findValue(node.left, type: "min");
       if (leftMin != null && leftMin.compareTo(minValue) < 0) {
@@ -85,8 +83,7 @@ class BinaryTree<T extends Comparable> {
         maxValue = rightMax;
       }
       return maxValue;
-    }
-    else {
+    } else {
       T? minValue = node.val;
       T? leftMin = _findValuePro(node.left, type: "min");
       if (leftMin != null && leftMin.compareTo(minValue) < 0) {
@@ -96,6 +93,41 @@ class BinaryTree<T extends Comparable> {
     }
   }
 
+  TreeNode? mergeTrees(TreeNode? node1, TreeNode? node2) {
+    //有一个树为空的话直接返回另一颗树
+    if (node1 == null) return node2;
+    if (node2 == null) return node1;
+
+    //比较两个根节点将小的那个做为新的根节点
+    //大的放在右边 ，小的放在左边
+    TreeNode? root;
+    if (node1.val!.compareTo(node2.val) < 0) {
+      root = node1;
+      root.right = mergeTrees(node1.right, node2);
+      return root;
+    } else {
+      root = node2;
+      root.left = mergeTrees(node1, node2.left);
+      return root;
+    }
+  }
+
+  List<T?> list = [];
+
+  List<T?> toList() {
+    list.clear();
+    _treeToList(root);
+    return list;
+  }
+
+  void _treeToList(
+    TreeNode<T>? node,
+  ) {
+    if (node == null) return;
+    _treeToList(node.left);
+    _treeToList(node.right);
+    list.add(node.val);
+  }
 
   void add(T val) {
     if (root == null) {

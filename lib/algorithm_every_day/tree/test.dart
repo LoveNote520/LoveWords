@@ -7,15 +7,15 @@ import 'binary _tree.dart';
 /// 说明:
 
 void main() {
-  BinaryTree tree = BinaryTree<int>();
-  tree.add(11);
-  tree.add(4);
-  tree.add(0);
-  tree.add(3);
-  tree.add(2);
-  tree.add(81);
-  tree.printTree();
-  TreePrinter().printTreeNode(tree.root,0);
-  print("${tree.findMax()}");
-  print("${tree.findMin()}");
+  BinaryTree tree1 = BinaryTree<int>.fromArray([11,6,8,9,3,12,16,2,]);
+  BinaryTree tree2 = BinaryTree<int>.fromArray([4,8,2,9,7,14,18,5,]);
+
+BinaryTree tree = BinaryTree<int>();
+  // tree.printTree();
+  // TreePrinter().printTreeNode(tree.root,0);
+  // print("${tree.findMax()}");
+  // print("${tree.findMin()}");
+
+   TreePrinter().printTreeNode(tree.mergeTrees(tree1.root, tree2.root),0);
+  // print("${tree2.toList()}");
 }

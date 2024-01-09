@@ -52,8 +52,8 @@ class TreeNode<T> {
       return null;
     }
     TreeNode? hit = traversal(node.left, key);
-    if(hit!= null) return hit;
-    hit = traversal(node.right, key);
+    if(hit!= null) return hit; //找到节点直接返回这个节点
+    hit = traversal(node.right, key); //这个时候 hit 还是空的
     return hit;
   }
 

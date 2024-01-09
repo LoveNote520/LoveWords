@@ -47,7 +47,7 @@ void main() {
   };
   TreeNode treeNode ;
   treeNode = TreeNode.formJson(map)!;
-  treeNode['00000000007'] = 6;
+  treeNode['00000000003'] = 6;
   // NewTree tree = NewTree(treeNode!);
   // tree.printTree();
 
