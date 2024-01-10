@@ -16,6 +16,6 @@ BinaryTree tree = BinaryTree<int>();
   // print("${tree.findMax()}");
   // print("${tree.findMin()}");
 
-   TreePrinter().printTreeNode(tree.mergeTrees(tree1.root, tree2.root),0);
-  // print("${tree2.toList()}");
+   // TreePrinter().printTreeNode(tree.mergeTrees(tree1.root, tree2.root),0);
+  print("${tree2.toOrderedList()}");
 }

@@ -119,6 +119,25 @@ class BinaryTree<T extends Comparable> {
     return list;
   }
 
+  List<T>? toOrderedList() {
+    List<T> _list = [];
+    list.clear();
+    _treeToList(root);
+    for (var element in list) {
+      if (_list.isNotEmpty) {
+        for (int i = 0; i < _list.length;i++) {
+          if (element!.compareTo(_list[i]) > 0) {
+            _list.insert(i,element);
+            break;
+          }
+        }
+      } else {
+        _list.add(element!);
+      }
+    }
+    return _list;
+  }
+
   void _treeToList(
     TreeNode<T>? node,
   ) {
