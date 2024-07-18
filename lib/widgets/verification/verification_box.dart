@@ -1,7 +1,7 @@
 library flutter_verification_box;
 
+import 'package:counter/widgets/verification/verification_box_item.dart';
 import 'package:flutter/material.dart';
-import 'package:tulip/widgets/verification/verification_box_item.dart';
 
 ///
 /// 验证码输入框
